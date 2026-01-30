@@ -1,0 +1,48 @@
+/* 
+
+Topics to be cover:
+    1. What css grid is and how it's different from flexbox
+    2. display: grid
+    3. grid-template-columns and grid-template-rows
+    4. units: px, %, fr, auto
+    5. grid-gap, row-gap, column-gap
+    6. repeat() function
+    7. minmax() function
+    8. grid-column-start, grid-column-end, grid-row-start, grid-row-end
+    9. Shorthand: grid-column and grid-row
+    10. grid-template-areas and grid-area
+    11. Alignment: justify-items, align-items, justify-content, align-content.
+
+*/
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  color: white;
+  background-color: black;
+}
+
+.main {
+    height: 100%;
+    width: 100%;
+    display: grid;
+    /* grid-template-columns: 100px 100px 100px; */
+    /* grid-template-columns: 20% 20% 20% 20% 20%; */
+    grid-template-columns: 50% 50%;
+    grid-template-columns: 10% 200px 3rem 30% ;
+    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-rows: 100px 200px 50% ;
+    grid-template-rows: 1fr 2fr 1fr;
+}
+
+.child {
+    background-color: rgb(132, 17, 71);
+    border: 3px solid white;
+}
