@@ -81,3 +81,4 @@ console.log(str.includes("krishna"))// false
 console.log(str.includes("kri"))// true
 console.log(str.includes(""))// true
 console.log(str.includes("werf"))// false
+
