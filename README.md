@@ -23,3 +23,6 @@ covering frontend, backend, databases, authentication, and deployment.
 ## Goal
 
 Build production-ready full-stack applications.
+
+
+<!-- Test dog open source -->
