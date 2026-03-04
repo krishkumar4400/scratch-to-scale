@@ -6,8 +6,6 @@ const App = () => {
   const [description, setDescription] = useState("");
   const [newDescription, setNewDescription] = useState("");
 
-
-
   async function submitHandler(e) {
     e.preventDefault();
     await axios.post("http://localhost:3000/api/notes", {
@@ -28,10 +26,10 @@ const App = () => {
   }
 
   useEffect(() => {
-      console.log("Hello Integration");
-      axios.get("http://localhost:3000/api/notes").then((res) => {
-        setNotes(res.data.notes);
-      });
+    console.log("Hello Integration");
+    axios.get("http://localhost:3000/api/notes").then((res) => {
+      setNotes(res.data.notes);
+    });
   }, []);
 
   return (
