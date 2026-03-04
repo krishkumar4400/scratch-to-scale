@@ -1,35 +1,96 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+const App = () => {
+  const [notes, setNotes] = useState([
+    {
+      title: "Test Title",
+      description: "Test Description",
+    },
+    {
+      title: "Test Title",
+      description: "Test Description",
+    },
+    {
+      title: "Test Title",
+      description: "Test Description",
+    },
+    {
+      title: "Test Title",
+      description: "Test Description",
+    },
+  ]);
 
-function App() {
-  const [count, setCount] = useState(0)
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [newDescription, setNewDescription] = useState("");
+
+  async function fetchNotes() {
+    const { data } = await axios.get("http://localhost:3000/api/notes");
+    console.log(data.notes);
+    setNotes(data.notes);
+  }
+
+  async function submitHandler(e) {
+    e.preventDefault();
+    await axios.post("http://localhost:3000/api/notes", {
+      title,
+      description,
+    });
+  }
+
+  async function deleteNoteHandler(note) {
+    await axios.delete(`http://localhost:3000/api/notes/${note._id}`);
+  }
+
+  async function updateNoteHandler(e,note) {
+    e.preventDefault();
+    await axios.patch(`http://localhost:3000/api/notes/${note._id}`, {
+      description: newDescription,
+    });
+  }
+
+  useEffect(() => {
+    fetchNotes();
+  }, []);
 
   return (
-    <>
+    <div className="notes">
       <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        {notes.map((note, index) => (
+          <div key={index} className="note">
+            <h1>{note.title}</h1>
+            <p>{note.description}</p>
+            <button type="button" onClick={() => deleteNoteHandler(note)}>
+              Delete Note
+            </button>
+            <form onSubmit={(e) => updateNoteHandler(e,note)}>
+              <input type="text" placeholder="Enter new description" value={newDescription} onChange={(e) => setNewDescription(e.target.value)} />
+              <button type="submit">
+                Update Note
+              </button>
+            </form>
+          </div>
+        ))}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+      <div className="create">
+        <form onSubmit={(e) => submitHandler(e)}>
+          <input
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            type="text"
+            placeholder="Note Title"
+          />
+          <input
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            type="text"
+            placeholder="Note Description"
+          />
+          <button type="submit">Submit</button>
+        </form>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    </div>
+  );
+};
 
-export default App
+export default App;

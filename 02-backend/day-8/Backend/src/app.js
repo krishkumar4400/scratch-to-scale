@@ -1,9 +1,14 @@
 const express = require("express");
 const notesModel = require("./models/notes.model.js");
-
+const cors = require('cors');
 const app = express();
 
 app.use(express.json());
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+  }),
+);
 
 /**
  * -POST /api/notes
@@ -14,6 +19,8 @@ app.post("/api/notes", async (req, res) => {
   const note = await notesModel.create(req.body);
   return res.status(201).json({
     message: "Note created ",
+    note,
+    success: true
   });
 });
 
