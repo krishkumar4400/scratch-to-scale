@@ -6,16 +6,33 @@ const App = () => {
   const [description, setDescription] = useState("");
   const [newDescription, setNewDescription] = useState("");
 
-  async function submitHandler(e) {
-    e.preventDefault();
-    await axios.post("http://localhost:3000/api/notes", {
-      title,
-      description,
+  function fetchNotes() {
+    axios.get("http://localhost:3000/api/notes").then((res) => {
+      setNotes(res.data.notes);
     });
   }
 
-  async function deleteNoteHandler(note) {
-    await axios.delete(`http://localhost:3000/api/notes/${note._id}`);
+  function submitHandler(e) {
+    e.preventDefault();
+    const { title, description } = e.target.elements;
+    console.log(title, description);
+
+    axios
+      .post("http://localhost:3000/api/notes", {
+        title: title.value,
+        description: description.value,
+      })
+      .then((res) => {
+        console.log(res.data);
+        fetchNotes();
+      });
+  }
+
+  function deleteNoteHandler(note) {
+    axios.delete(`http://localhost:3000/api/notes/${note._id}`).then((res) => {
+      console.log(res.data);
+      fetchNotes();
+    });
   }
 
   async function updateNoteHandler(e, note) {
@@ -26,10 +43,7 @@ const App = () => {
   }
 
   useEffect(() => {
-    console.log("Hello Integration");
-    axios.get("http://localhost:3000/api/notes").then((res) => {
-      setNotes(res.data.notes);
-    });
+    fetchNotes();
   }, []);
 
   return (
@@ -55,18 +69,12 @@ const App = () => {
         ))}
       </div>
       <div className="create">
-        <form onSubmit={(e) => submitHandler(e)}>
+        <form onSubmit={submitHandler}>
+          <input name="title" type="text" placeholder="Enter Note Title" />
           <input
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            name="description"
             type="text"
-            placeholder="Note Title"
-          />
-          <input
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            type="text"
-            placeholder="Note Description"
+            placeholder="Enter Note Description"
           />
           <button type="submit">Submit</button>
         </form>
