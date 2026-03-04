@@ -40,6 +40,7 @@ const App = () => {
     await axios.patch(`http://localhost:3000/api/notes/${note._id}`, {
       description: newDescription,
     });
+    fetchNotes();
   }
 
   useEffect(() => {
