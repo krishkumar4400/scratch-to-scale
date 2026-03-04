@@ -1,34 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 const App = () => {
-  const [notes, setNotes] = useState([
-    {
-      title: "Test Title",
-      description: "Test Description",
-    },
-    {
-      title: "Test Title",
-      description: "Test Description",
-    },
-    {
-      title: "Test Title",
-      description: "Test Description",
-    },
-    {
-      title: "Test Title",
-      description: "Test Description",
-    },
-  ]);
-
+  const [notes, setNotes] = useState([]);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [newDescription, setNewDescription] = useState("");
 
-  async function fetchNotes() {
-    const { data } = await axios.get("http://localhost:3000/api/notes");
-    console.log(data.notes);
-    setNotes(data.notes);
-  }
+
 
   async function submitHandler(e) {
     e.preventDefault();
@@ -42,7 +20,7 @@ const App = () => {
     await axios.delete(`http://localhost:3000/api/notes/${note._id}`);
   }
 
-  async function updateNoteHandler(e,note) {
+  async function updateNoteHandler(e, note) {
     e.preventDefault();
     await axios.patch(`http://localhost:3000/api/notes/${note._id}`, {
       description: newDescription,
@@ -50,7 +28,10 @@ const App = () => {
   }
 
   useEffect(() => {
-    fetchNotes();
+      console.log("Hello Integration");
+      axios.get("http://localhost:3000/api/notes").then((res) => {
+        setNotes(res.data.notes);
+      });
   }, []);
 
   return (
@@ -63,11 +44,14 @@ const App = () => {
             <button type="button" onClick={() => deleteNoteHandler(note)}>
               Delete Note
             </button>
-            <form onSubmit={(e) => updateNoteHandler(e,note)}>
-              <input type="text" placeholder="Enter new description" value={newDescription} onChange={(e) => setNewDescription(e.target.value)} />
-              <button type="submit">
-                Update Note
-              </button>
+            <form onSubmit={(e) => updateNoteHandler(e, note)}>
+              <input
+                type="text"
+                placeholder="Enter new description"
+                value={newDescription}
+                onChange={(e) => setNewDescription(e.target.value)}
+              />
+              <button type="submit">Update Note</button>
             </form>
           </div>
         ))}
