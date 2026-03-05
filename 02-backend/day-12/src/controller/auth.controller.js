@@ -1,6 +1,7 @@
 const userModel = require("../Model/User.js");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const crypto = require('crypto');
 
 async function register(req, res) {
   const { name, email, password } = req.body;
@@ -14,12 +15,11 @@ async function register(req, res) {
     });
   }
 
-  
-
+  const hash = crypto.createHash('md5').update(password).digest('hex');
   user = await userModel.create({
     name,
     email,
-    password,
+    password: hash
   });
 
   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
@@ -42,7 +42,8 @@ async function login(req, res) {
     });
   }
 
-  if (password !== user.password) {
+  const hash = crypto.createHash('md5').update(password).digest('hex');
+  if (hash !== user.password) {
     return res.status(401).json({
       message: "Incorrect email id or password",
       success: false,
@@ -56,19 +57,20 @@ async function login(req, res) {
   return res.status(200).json({
     message: "Login successful",
     success: true,
-    user
+    user,
   });
 }
 
-async function logout(req,res) {
-    res.clearCookie("jwt_token");
-    res.json({
-        message: "You are logged out",
-        success: true 
-    });
+async function logout(req, res) {
+  res.clearCookie("jwt_token");
+  res.json({
+    message: "You are logged out",
+    success: true,
+  });
 }
 
 module.exports = {
   register,
   login,
+  logout,
 };

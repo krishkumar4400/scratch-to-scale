@@ -1,5 +1,5 @@
 const express = require('express');
-const { register, login } = require('../controller/auth.controller.js');
+const { register, login, logout } = require('../controller/auth.controller.js');
 
 const authRouter = express.Router();
 
@@ -10,5 +10,7 @@ authRouter.post('/protected', (req,res) => {
 });
 
 authRouter.post('/login', login)
+
+authRouter.get('/logout', logout);
 
 module.exports = authRouter;
