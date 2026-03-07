@@ -20,3 +20,4 @@ var val = 10;
  *  - ab variable error nahi deta kyuki wo hamesha use hone se pehle exist kr rha tha.
  *
  */
+
