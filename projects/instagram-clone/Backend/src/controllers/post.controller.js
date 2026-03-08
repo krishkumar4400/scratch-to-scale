@@ -21,6 +21,26 @@ async function createPost(req, res) {
   });
 }
 
+
+async function getUserPosts(req, res) {
+    const posts = await postModel.find({ userId: req.userId });
+    return res.status(200).json({
+        posts,
+        success: true
+    });
+}
+
+async function getPostById(req,res) {
+    const {postId} = req.params
+
+    const post = await postModel.findById(postId);
+    return res.status(200).json({
+        post 
+    });
+}
+
 module.exports = {
   createPost,
+  getUserPosts,
+  getPostById,
 };
