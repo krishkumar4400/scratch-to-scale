@@ -4,9 +4,10 @@ const postStatsSchema = new mongoose.Schema(
   {
     postId: {
       type: mongoose.Schema.Types.ObjectId,
-      require: true,
+      required: true,
       ref: "posts",
       unique: true,
+      index: true,
     },
     likesCount: {
       type: Number,
@@ -30,8 +31,11 @@ const postStatsSchema = new mongoose.Schema(
   },
 );
 
-postStatsSchema.index({ postId: 1, createdAt: -1 });
+postStatsSchema.index({ likesCount: -1 });
+postStatsSchema.index({ sharesCount: -1 });
+postStatsSchema.index({ commentsCount: -1 });
+postStatsSchema.index({ createdAt: -1 });
 
-const postStatsModel = mongoose.model("postStats", postStatsSchema);
+const postStatsModel = mongoose.model("post_stats", postStatsSchema);
 
 module.exports = postStatsModel;
