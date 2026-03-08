@@ -13,7 +13,10 @@ async function isAuthenticated(req, res, next) {
     next();
   } catch (error) {
     console.error(error);
-    next();
+    return res.status(401).json({
+      message: "user not authorized",
+      success: false 
+    });
   }
 }
 
