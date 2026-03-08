@@ -33,6 +33,7 @@ const postSchema = new mongoose.Schema(
 // indexes
 postSchema.index({ userId: 1 });
 postSchema.index({ createdAt: -1 });
+postSchema.index({ _id: 1, userId: 1 });
 postSchema.index({ userId: 1, createdAt: -1 });
 
 const postModel = mongoose.model("posts", postSchema);

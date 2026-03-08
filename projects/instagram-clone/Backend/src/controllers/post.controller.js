@@ -1,3 +1,4 @@
+const { default: mongoose } = require("mongoose");
 const imagekit = require("../config/imagekit.js");
 const postModel = require("../Model/Post.Model.js");
 const postStatsModel = require("../Model/PostStats.Model.js");
@@ -50,12 +51,72 @@ async function getUserPosts(req, res) {
 }
 
 async function getPostById(req, res) {
-  const { postId } = req.params;
+  try {
+    const { postId } = req.params;
 
-  const post = await postModel.findById(postId);
-  return res.status(200).json({
-    post,
-  });
+    if (!mongoose.Types.ObjectId.isValid(postId)) {
+      return res.status(400).json({
+        message: "Invalid post id",
+        success: false,
+      });
+    }
+
+    const post = await postModel.aggregate([
+      {
+        $match: {
+          _id: new mongoose.Types.ObjectId(postId),
+          userId: new mongoose.Types.ObjectId(req.userId),
+        },
+      },
+
+      {
+        $lookup: {
+          from: "users",
+          localField: "userId",
+          foreignField: "_id",
+          as: "user",
+        },
+      },
+
+      {
+        $lookup: {
+          from: "post_stats",
+          localField: "_id",
+          foreignField: "postId",
+          as: "stats",
+        },
+      },
+
+      {
+        $unwind: "$user",
+      },
+
+      {
+        $unwind: {
+          path: "$stats",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+    ]);
+    console.log(post);
+
+    if (!post.length) {
+      return res.status(404).json({
+        success: false,
+        message: "Post not found",
+      });
+    }
+    return res.status(200).json({
+      post: post[0],
+      success: true,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      message: "Internal server error",
+      success: false,
+    });
+  }
 }
 
 module.exports = {
