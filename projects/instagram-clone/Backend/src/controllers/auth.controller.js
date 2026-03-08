@@ -59,56 +59,65 @@ async function userRegister(req, res) {
 }
 
 async function loginController(req, res) {
-    try {
-        const {username, email, password} = req.body;
-        console.log(req.body);
+  try {
+    const { username, email, password } = req.body;
+    console.log(req.body);
 
-        const user = await userModel.findOne({
-            $or: [
-                {username: username},
-                {email: email}
-            ]
-        });
-        if(!user) {
-            return res.status(401).json({
-                message: "Incorrect email or password",
-                success: false 
-            });
-        }
-
-        const isPasswordMatch = await bcrypt.compare(
-          password,
-          user.passwordHash,
-        );
-
-        if(!isPasswordMatch) {
-            return res.status(401).json({
-                message: "Incorrect email or password",
-                success: false 
-            });
-        }
-
-        const token = jwt.sign({id: user._id}, process.env.JWT_SECRET, {
-            expiresIn: '1d'
-        });
-
-        res.cookie("token", token);
-
-        return res.status(200).json({
-            message: "You are logged in successfully",
-            success: true 
-        });
-
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({
-            message: "Internal server error",
-            success: false 
-        });
+    const user = await userModel.findOne({
+      $or: [{ username: username }, { email: email }],
+    });
+    if (!user) {
+      return res.status(401).json({
+        message: "Incorrect email or password",
+        success: false,
+      });
     }
+
+    const isPasswordMatch = await bcrypt.compare(password, user.passwordHash);
+
+    if (!isPasswordMatch) {
+      return res.status(401).json({
+        message: "Incorrect email or password",
+        success: false,
+      });
+    }
+
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "1d",
+    });
+
+    res.cookie("token", token);
+
+    return res.status(200).json({
+      message: "You are logged in successfully",
+      success: true,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      message: "Internal server error",
+      success: false,
+    });
+  }
+}
+
+async function logoutController(req, res) {
+  try {
+    return res.clearCookie().status(200).json({
+      message: "You are logged out",
+      success: true,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      message: "Internal server error",
+      success: false,
+    });
+  }
 }
 
 module.exports = {
   userRegister,
   loginController,
+  logoutController,
 };
