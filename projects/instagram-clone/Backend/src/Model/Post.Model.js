@@ -5,7 +5,7 @@ const postSchema = new mongoose.Schema(
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "users",
-      required: true,
+      required: [true, "User id is required to create a post"],
     },
     caption: {
       type: String,
@@ -18,11 +18,11 @@ const postSchema = new mongoose.Schema(
     },
     mediaType: {
       type: String,
-      require: true,
+      required: true,
     },
     mediaUrl: {
       type: String,
-      require: true,
+      required: [true, "Media URL is required for creating a post"],
     },
   },
   {
