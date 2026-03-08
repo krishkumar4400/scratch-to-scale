@@ -15,7 +15,7 @@ async function isAuthenticated(req, res, next) {
     console.error(error);
     return res.status(401).json({
       message: "user not authorized",
-      success: false 
+      success: false,
     });
   }
 }
