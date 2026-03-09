@@ -19,12 +19,11 @@ const saveSchema = new mongoose.Schema(
 );
 
 // indexes
-saveSchema.index({postId: 1});
-saveSchema.index({userId: 1});
+saveSchema.index({ postId: 1 });
+saveSchema.index({ userId: 1 });
 
 // prevent duplicate saves
-saveSchema.index({userId: 1, postId: 1}, {unique: true})
-
+saveSchema.index({ userId: 1, postId: 1 }, { unique: true });
 
 const saveModel = mongoose.model("saves", saveSchema);
 
