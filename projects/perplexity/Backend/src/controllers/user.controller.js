@@ -1,14 +1,17 @@
 import userModel from "../Models/User.Model";
+import { validationResult } from "express-validator";
 
 export async function registerController(req, res) {
   try {
-    const { username, email, password } = req.body;
-    if (!username || !email || !password) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
       return res.status(400).json({
-        message: "Missing details",
+        message: errors.array(),
         success: false,
       });
     }
+
+    const { username, email, password } = req.body;
 
     let user = await userModel.findOne({
       $or: [{ username }, { email }],
@@ -28,7 +31,7 @@ export async function registerController(req, res) {
         username,email,password 
     });
 
-    
+
   } catch (error) {
     console.error(error);
     return res.status(500).json({
