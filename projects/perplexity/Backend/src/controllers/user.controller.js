@@ -1,4 +1,5 @@
 import userModel from "../Models/User.Model.js";
+import { sendMail } from "../services/mail.service.js";
 
 export async function registerController(req, res) {
   try {
@@ -22,6 +23,18 @@ export async function registerController(req, res) {
       username,
       email,
       password,
+    });
+
+    await sendMail({
+      to: user.email,
+      subject: "Welcome to perplexity",
+      // text: `Hi ${username}, \n\nThank you for registering at Perplexity. We're excited to have you on board!\n\nBest regards, \nThe Perplexity Team`,
+      html: `
+                <p>Hi ${username},</p>
+                <p>Thank you for registering at <strong>Perplexity</strong>. We're excited to have you on board!</p>
+                <p>If you did not create an account, please ignore this email.</p>
+                <p>Best regards,<br>The Perplexity Team</p>
+        `,
     });
 
     return res.json({
