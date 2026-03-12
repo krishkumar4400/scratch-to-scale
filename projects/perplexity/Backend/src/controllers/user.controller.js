@@ -229,5 +229,11 @@ export async function getMe(req, res) {
       success: true,
       user,
     });
-  } catch (error) {}
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      message: "Internal server error",
+      success: false,
+    });
+  }
 }
