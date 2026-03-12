@@ -1,7 +1,14 @@
 import userModel from "../Models/User.Model.js";
 import { sendMail } from "../services/mail.service.js";
 import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
 
+/**
+ * @description Register a new user and send verification email
+ * @route POST /api/user/register
+ * @access Public
+ * @body {username, email, password}
+ */
 export async function registerController(req, res) {
   try {
     const { username, email, password } = req.body;
@@ -59,6 +66,12 @@ export async function registerController(req, res) {
   }
 }
 
+/**
+ * @description Verify user's email address
+ * @route GET /api/user/verify-email
+ * @access Public
+ * @query {token}
+ */
 export async function verifyEmail(req, res) {
   try {
     const { token } = req.query;
@@ -90,6 +103,12 @@ export async function verifyEmail(req, res) {
   }
 }
 
+/**
+ * @description Resend verification email
+ * @route POST /api/user/resend-email
+ * @access Public
+ * @body {username, email}
+ */
 export async function resendEmail(req, res) {
   try {
     const { email, username } = req.body;
@@ -131,23 +150,41 @@ export async function resendEmail(req, res) {
   }
 }
 
+/**
+ * @description Login a user
+ * @route POST /api/user/login
+ * @access Public
+ * @body {email, password}
+ */
 export async function loginController(req, res) {
   try {
-    const { username, email, password } = req.body;
-    const user = await userModel.findOne({
-      $or: [{ username }, { email }],
-    });
+    const { email, password } = req.body;
+    const user = await userModel
+      .findOne({
+        email,
+      })
+      .select("+password");
+    console.log(user);
 
     if (!user) {
-      return res.status(401).json({
-        message: "You are not registered",
+      return res.status(400).json({
+        message: "Incorrect email or password",
+        success: false,
+      });
+    }
+
+    const isPasswordMatch = await user.comparePassword(password);
+
+    if (!isPasswordMatch) {
+      return res.status(400).json({
+        message: "Incorrect email or password",
         success: false,
       });
     }
 
     if (!user.isVerified) {
       return res.status(401).json({
-        message: "You are not verified",
+        message: "Please verify your email before logging in",
         success: false,
       });
     }
@@ -161,13 +198,12 @@ export async function loginController(req, res) {
         expiresIn: "7d",
       },
     );
+    res.cookie("token", token);
 
-    return res.cookie("token", token).status(200).json({
-      message: "You are logged in",
+    return res.status(200).json({
+      message: "Login successful",
       success: true,
     });
-
-
   } catch (error) {
     console.error(error);
     return res.status(500).json({
@@ -175,4 +211,23 @@ export async function loginController(req, res) {
       success: false,
     });
   }
+}
+
+/**
+ * @description Get current logged in user's details
+ * @route GET /api/user/register
+ * @access Private
+ * @req {userId}
+ * @cookie {token}
+ */
+export async function getMe(req, res) {
+  try {
+    const userId = req.userId;
+    const user = await userModel.findById(userId);
+    console.log(user);
+    return res.status(200).json({
+      success: true,
+      user,
+    });
+  } catch (error) {}
 }

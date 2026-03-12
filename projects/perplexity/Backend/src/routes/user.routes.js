@@ -4,11 +4,16 @@ import {
   registerValidator,
 } from "../validators/userValidator.js";
 import {
+  getMe,
   loginController,
   registerController,
   resendEmail,
   verifyEmail,
 } from "../controllers/user.controller.js";
+import {
+  authenticationMiddleware,
+  isAuthenticated,
+} from "../middlewares/auth.middleware.js";
 
 const userRouter = Router();
 
@@ -44,5 +49,13 @@ userRouter.post("/resend-email", resendEmail);
  */
 userRouter.post("/login", loginValidator, loginController);
 
-export default userRouter;
+/**
+ * @route POST /api/user/me
+ * @desc Get current logged in user's information or details
+ * @access Private
+ * @req {userId}
+ * @cookie {token}
+ */
+userRouter.get("/me", authenticationMiddleware, isAuthenticated, getMe);
 
+export default userRouter;
