@@ -3,6 +3,8 @@ import { sendMail } from "../services/mail.service.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 
+/** @type {import("express").RequestHandler} */
+
 /**
  * @description Register a new user and send verification email
  * @route POST /api/user/register
@@ -228,6 +230,23 @@ export async function getMe(req, res) {
     return res.status(200).json({
       success: true,
       user,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      message: "Internal server error",
+      success: false,
+    });
+  }
+}
+
+
+export async function logoutController(req, res) {
+  try {
+    res.clearCookie("token");
+    return res.status(200).json({
+      message: "You are logged out",
+      success: true,
     });
   } catch (error) {
     console.error(error);

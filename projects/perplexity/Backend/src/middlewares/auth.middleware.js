@@ -1,5 +1,16 @@
+
+
 import jwt from "jsonwebtoken";
 
+/**
+ * 
+ * @type {import("express").RequestHandler}
+ * @type {import("express").Request}
+ * @type {import("express").Response}
+ * @param {import("express").Request} req
+ * @param {import("express").Response} res
+ * @param {import("express").NextFunction} next
+ */
 export const authenticationMiddleware = async (req, res, next) => {
   try {
     const { token } = req.cookies;
@@ -28,3 +39,4 @@ export const isAuthenticated = (req, res, next) => {
   }
   next();
 };
+
