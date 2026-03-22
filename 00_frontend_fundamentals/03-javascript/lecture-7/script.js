@@ -51,3 +51,21 @@ for(let i=0; i<5; i++) {
     console.log("Krish");
 }
 
+for(i=12; i>0; i--) {
+    if(i==5 || i==7) {}
+    else {
+        console.log(i);
+    }
+}
+
+for(i=12; i>0; i--) {
+    if(i!=5 && i!=7) {
+        console.log(i);
+    }
+}
+
+for(i=12; i>0; i--) {
+    if(i!=5 || i!=7) {
+        console.log(i);
+    }
+}
