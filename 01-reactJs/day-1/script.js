@@ -1,5 +1,7 @@
 // destructuring
 
+import  user, { val } from "./app.js";
+
 // array
 var arr1 = [10, 20, 30, 40];
 console.log(arr1); // [10, 20, 30, 40]
@@ -19,7 +21,7 @@ var obj1 = {
 
 console.log(obj1); // {name: 'krish', age: 22}
 
-obj2 = obj1;
+var obj2 = obj1;
 
 obj2.name = "ankit";
 
@@ -102,7 +104,13 @@ const {skills} = obj4;
 console.log(skills);
 
 const [first] = skills;
-console.log(first);
-const {f, ...restSkills} = skills;
-console.log(f);
-console.log(restSkills);
+console.log(first); // js
+const [f, ...restSkills] = skills;
+console.log(f);  // js
+console.log(restSkills); // ["react", "next"]
+
+
+// import - export
+
+console.log(val);
+console.log(user);
