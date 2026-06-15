@@ -8,6 +8,7 @@ const authRouter = express.Router();
  * POST /api/auth/register
  * req.body => name,email,password
  */
+
 authRouter.post('/register', userRegister);
 
 authRouter.post('/login', loginController)

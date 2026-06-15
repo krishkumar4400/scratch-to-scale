@@ -15,4 +15,4 @@ app.use('/api/auth', authRouter);
 // post router
 app.use('/api/posts', postRouter);
 
-module.exports = app;  
+module.exports = app;
