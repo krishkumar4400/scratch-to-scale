@@ -1,80 +1,37 @@
 const mongoose = require("mongoose");
 
-const userSchema = mongoose.Schema(
-  {
-    username: {
-      type: String,
-      unique: [true, "This username is already taken"],
-      required: [true, "Username is required"],
-      trim: true,
-      index: true,
-      lowercase: true
-    },
-    email: {
-      type: String,
-      unique: [true, "Email already exists"],
-      required: [true, "Email is required"],
-      trim: true,
-      lowercase: true,
-      index: true
-    },
-    passwordHash: {
-      type: String,
-      required: [true, "Password is required"],
-    },
-    fullName: {
-      type: String,
-      default: "",
-      trim: true
-    },
-    bio: {
-      type: String,
-      default: "",
-      maxlength: 150
-    },
-    profilePicture: {
-      type: String,
-      default: "https://ik.imagekit.io/xvni7jpsb/OIP.webp",
-    },
-    website: {
-      type: String,
-      default: "",
-    },
-    isPrivate: {
-      type: Boolean,
-      default: false,
-    },
-    isVerified: {
-      type: Boolean,
-      default: false,
-    },
-    verifyOTP: {
-      type: String,
-      default: null,
-    },
-    verifyOTPExpireAt: {
-      type: Date,
-      default: null,
-    },
-    resetOTP: {
-      type: String,
-      default: null,
-    },
-    resetOTPExpireAt: {
-      type: Date,
-      default: null,
-    },
-    accountStatus: {
-      type: String,
-      enum: ['active', 'suspended', 'deleted'],
-      default: 'active'
-    }
+const userSchema = new mongoose.Schema({
+  username: {
+    type: String,
+    required: true,
+    trim: true,
+    lowercase: true,
+    index: true,
+    unique: true,
   },
-  {
-    timestamps: true,
+  email: {
+    type: String,
+    required: true,
+    trim: true,
+    lowercase: true,
+    index: true,
+    unique: true,
   },
-);
+  fullname: {
+    type: String,
+    trim: true,
+  },
+  password: {
+    type: String,
+    required: true,
+    trim: true,
+    select: false,
+  },
+  isEmailVerified: {
+    type: Boolean,
+    default: false,
+  },
+});
 
-const userModel = mongoose.model("users", userSchema);
-
+const userModel = mongoose.model.User || mongoose.model("User", userSchema);
 module.exports = userModel;

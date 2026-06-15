@@ -1,36 +1,49 @@
-const jwt = require("jsonwebtoken");
+const jwt = require('jsonwebtoken');
+const userModel = require('../Model/User.Model.js');
 
-async function isAuthenticated(req, res, next) {
+const authenticationMiddleware = async (req,res, next) => {
   try {
-    const { token } = req.cookies;
-
-    if (!token) {
-      return next();
+    const token = req?.cookies?.token || req?.headers?.authorization?.split(" ")[1];
+    if(!token) {
+      return res.status(401).json({
+        message: "You are not logged in",
+        success: false 
+      });
     }
 
-    const payload = jwt.verify(token, process.env.JWT_SECRET);
-    req.userId = payload.id;
-    next();
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+      const user = await userModel.findById(decodedToken._id);
+      if(!user) {
+        return res.status(400).json({
+          message: "Token is not valid",
+          success: false 
+        });
+      }
+
+      req.userId = user._id;
+      next();
+
   } catch (error) {
     console.error(error);
-    return res.status(401).json({
-      message: "user not authorized",
+    return res.status(500).json({
+      message: error.message,
       success: false,
     });
   }
 }
 
-function verifyAuthentication(req, res, next) {
-  if (!req.userId) {
+const isAuthenticated = (req,res,next) => {
+  if(!req.userId) {
     return res.status(401).json({
-      message: "You are not logged in",
-      success: false,
+      message: "you are not authorized",
+      success: false 
     });
   }
+
   next();
 }
 
 module.exports = {
-  isAuthenticated,
-  verifyAuthentication,
+  authenticationMiddleware,
+  isAuthenticated 
 };
