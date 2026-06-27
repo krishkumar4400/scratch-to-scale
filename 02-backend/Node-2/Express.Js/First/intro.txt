@@ -1,0 +1,13 @@
+downloding specific version:
+npm install express@5.0.0
+
+checking the current updates or version of a package:
+npx npm-check-updates 
+
+Run npx npm-check-updates -u to upgrade package.json
+then run bun install 
+
+1. app - This variable holds the created Express app, which you can use to:
+Define routes (app.get(), app.post(), etc).
+Configure middleware (app.use())
+Start the server (app.listen)

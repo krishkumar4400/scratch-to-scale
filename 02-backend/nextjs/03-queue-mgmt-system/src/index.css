@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+* {
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+html, body {
+    background-color: black;
+    color: white;
+}
+

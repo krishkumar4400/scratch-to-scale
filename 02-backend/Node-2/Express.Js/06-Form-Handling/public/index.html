@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/submit" method="post">
+        <div>
+            <input type="text" name="name" placeholder="Enter your name" id="">
+        </div>
+
+        <div>
+            <input type="email" name="email" placeholder="Enter your Email Id">
+        </div>
+        <div>
+            <!-- <textarea placeholder="Enter the text" name="text" id="">
+
+            </textarea> -->
+            <textarea placeholder="Enter the text" name="text[message]" id="message">
+
+            </textarea>
+        </div>
+
+        <div>
+            <button>Click Here</button>
+        </div>
+        
+    </form>
+</body>
+</html>

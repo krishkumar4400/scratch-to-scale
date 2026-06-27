@@ -1,0 +1,10 @@
+# Node
+node_modules/
+.env
+dist/
+build/
+
+notes.txt
+Notes.md
+
+notes

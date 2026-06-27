@@ -1,0 +1,74 @@
+1. what to learn 
+2. how to learn it 
+3. which skills will make you stand out from the crowd 
+4. how to land a high paying job.
+
+
+-> learn + practice: 1h concept learning(video, docs, ai, new topics), 2 hours hands on building + 1hour DSA. 
+
+
+1. Part 1 - Essential Skills:
+    a.) Programming Foundation(6 - 10 weeks)
+        - core java basics 
+        - oops 
+        - basic dsa 
+        - code debugging
+
+    use AI to learn and understand concept, code and error and for debug understanding.
+        
+    b.) Backend Development(10 - 14 weeks)
+        - Advance Java 
+        - SQL and databases.
+        - Git and GitHub 
+        - Spring Boot 
+        - Spring dara JPA & Hibernate 
+        - REST API & Postman
+        - Build first backend project.
+    collaborate with AI don't depend. 
+
+    c.) Frontend or Full stack
+        - html, css, js, react, ts. 
+        - full satck connection and db and project. 
+        - Authentication:
+            - login
+            - signup 
+            - jwt token
+            - bcrypt 
+            - deployment
+
+    d.) Advanced AI-Assisted Development
+        - use copilot and cursor daily.
+        - learn clear and best prompting that generates high quality code.
+        - write clear & detailed prompts 
+        - review ai generated code 
+        - learn the basics of LLMs
+        - project: Add ai powered feature in project - 
+        
+
+
+
+
+2. Part 2 - Advanced / standout Skills:
+
+    a.) system design (resource: Alex Xu system design interview, gaurav sen YT)
+        - load balancers
+        - caching 
+        - scaling 
+
+    b.) Microservices and cloud basics 
+        - AWS basics 
+
+    c.) CI/CD Basics
+        - github actions 
+        - automated testing and deployment.
+        - DSA - Medium and Hard. 
+        - 200 to 300 problems 
+        - focus on patterns 
+        - Strong project (in different domain)
+
+## How to standout from the crowd ??
+    1. Follow Modern roadmap 
+    2. Build real projects 
+    3. Resume that solves recruiter problems 
+    4. Apply in volume 
+    5. Strong Communication (Explain project very well)

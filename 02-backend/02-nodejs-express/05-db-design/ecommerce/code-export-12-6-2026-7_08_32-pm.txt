@@ -1,0 +1,85 @@
+users[icon: user] {
+  _id string pk
+  username string 
+  email string
+  password string
+  isEmailVerified boolean
+  refreshToken string
+  createdAt Date
+  updatedAt Date
+}
+
+products[icon: shopping-bag] {
+  _id string
+  name string
+  description string
+  price number
+  quantity int 
+  discount int
+  category ObjectId categories 
+  productImage string
+  stock number
+  inStock boolean
+  owner ObjectId users
+  createdAt Date
+  updatedAt Date
+}
+
+payments[icon: payment] {
+  _id string pk
+  amount number
+  createdAt Date
+  updatedAt Date
+}
+
+cart[icon: shopping-basket] {}
+
+categories[icon: package] {
+  _id string pk
+  name string 
+  createdAt Date
+  updatedAt Date
+}
+
+orderItems[icon: list] {
+  _id string pk
+  productId ObjectId products
+  quantity number
+}
+
+orders[icon: list-ordered] {
+  _id string pk
+  customer ObjectId users
+  orderItems ObjectId[] orderItems
+  address string
+  status enum "PENDING", "DELIVERED", "CANCLED"
+  paymentId ObjectId payments
+  createdAt Date
+  updatedAt Date
+}
+
+products.category - categories._id
+products.owner - users._id
+
+orderItems.productId - products._id
+orders.customer - users._id
+orders.orderItems < orderItems._id
+orders.paymentId - payments._id
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

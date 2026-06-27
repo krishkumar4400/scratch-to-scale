@@ -1,0 +1,5 @@
+understanding Event Emitters: The EventEmitter class from the events module is at the core of event - driven programming in Node.js. It allows you to create, handle and listen to custom events.
+
+1. Adding Multiple Listeners
+2. Removing Event Listeners 
+3. Error Handling In Events 

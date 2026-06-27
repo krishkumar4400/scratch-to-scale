@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="user-list">
+      <h3>Online Users</h3>
+      <ul id="users"></ul>
+    </div>
+
+    <div id="chat">
+      <form action="">
+        <input
+          id="inputMessage"
+          type="text"
+          placeholder="Enter your message"
+          required
+        />
+        <div>
+          <button type="submit">Send</button>
+        </div>
+      </form>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const socket = io();
+
+      const userList = document.querySelector("#users");
+      const chat = document.querySelector("#chat");
+      const messageForm = document.querySelector("form");
+      const messageInput = document.querySelector("#inputMessage");
+
+      const userName = prompt("Enter your username");
+
+      socket.emit("join", userName);
+
+      socket.on("userJoined", (user) => {
+        addMessage(`${user} has joined the chat`);
+      });
+
+      socket.on("userList", (users) => {
+        userList.innerHTML = users.map((user) => `<li>${user}</li>`.join(""));
+      });
+
+      // listen for chat message events from the server
+      socket.on("chatMessage", (message) => {
+        addMessage(`${message.userName} : ${message.messageText}`);
+      });
+
+      
+
+      socket.on('userLeft', (user) => {
+        addMessage(`${user} has left the chat`);
+      });
+
+      function addMessage(text) {
+        const div = document.createElement("div");
+        div.textContent = text;
+        chat.appendChild(div);
+        chat.scrollTop = chat.scrollHeight;
+      }
+
+      // handle form submission
+      messageForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        const messageText = messageInput.value.trim();
+        if(messageText) {
+            socket.emit('chatMessage', {
+                userName, messageText
+            });
+            messageInput.value = '';
+        }
+      })
+    </script>
+  </body>
+</html>

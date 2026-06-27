@@ -1,0 +1,5 @@
+MySQL -> Relational data model -> ORM = object relational mapping - Drizzle ORM, Prisma ORM
+
+
+
+MongoDB -> ODM -> Object Documents Mapping

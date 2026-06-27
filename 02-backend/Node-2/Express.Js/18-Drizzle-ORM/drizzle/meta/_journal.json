@@ -1,0 +1,13 @@
+{
+  "version": "7",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1758807879646,
+      "tag": "0000_stale_nuke",
+      "breakpoints": true
+    }
+  ]
+}

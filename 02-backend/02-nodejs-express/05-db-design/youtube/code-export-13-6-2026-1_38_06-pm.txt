@@ -1,0 +1,135 @@
+users[icon: user] {
+  _id string pk
+  username string 
+  fullName string 
+  email string
+  password string 
+  avatar string 
+  coverImage string 
+  isVerified boolean 
+  watchHistory ObjectId[] videos
+  likeHistory ObjectId[] videos
+  refreshToken string 
+  channel ObjectId channels
+  createdAt Date
+  updatedAt Date
+}
+
+videos[icon: video] {
+  _id string pk
+  title string
+  description string 
+  thumbnail string
+  videoFile string
+  owner ObjectId users
+  duration number 
+  views number
+  comments ObjectId [] comments
+  isPublished boolean
+  createdAt Date
+  updatedAt Date
+}
+
+channels [icon: radio] {
+  _id: string pk
+  name string 
+  description string 
+  tags array
+  logo string 
+  subscribers ObjectId[] users
+}
+
+tweets[icon: twitter] {
+  _id string pk
+  owner ObjectId users
+  content string 
+  attachment string
+  createdAt Date
+  updatedAt Date 
+}
+
+comments[icon: comments] {
+  _id string pk
+  content string
+  owner ObjectId users
+  replies ObjectId[] users
+  likes number
+  video ObjectId videos
+  createdAt Date
+  updatedAt Date
+}
+
+likes[icon: heart] {
+  _id string pk 
+  video ObjectId videos
+  comment ObjectId comments
+  post ObjectId tweets
+  likedBy ObjectId users
+  createdAt Date
+  updatedAt Date
+}
+
+subscription[icon: user-check] {
+  _id string pk
+  subscriber ObjectId users
+  channel ObjectId users
+  createdAt Date 
+  updatedAt Date
+}
+
+playlists[icon: list] {
+  _id string pk
+  name string 
+  description string 
+  videos ObjectId[] videos
+  owner ObjectId users
+  createdAt Date
+  updatedAt Date
+}
+
+watchHistory[icon: timer] {
+  _id string pk
+  user ObjectId users
+  videos ObjectId[] videos
+  createdAt Date
+  updatedAt Date
+}
+
+commentReplies [icon: reply] {
+  _id string pk
+  content string
+  owner ObjectId users
+  likes number
+}
+
+users.watchHistory < videos._id
+users.likeHistory < videos._id
+users.channel - channels._id
+
+videos.owner - users._id
+videos.comments < comments._id
+
+tweets.owner - tweets._id
+
+playlists.videos < videos._id
+playlists.owner - users._id
+
+comments.owner - users._id
+comments.replies < commentReplies._id
+comments.video - videos._id
+
+commentReplies.owner - users._id
+
+subscription.channel <> users.channel
+subscription.subscriber <> users._id
+
+channels.subscribers < users._id
+
+// likes can be done on multiple places[video, post, comment]
+likes.likedBy - users._id
+likes.video > videos._id
+likes.post > tweets._id
+likes.comment > comments._id
+
+watchHistory.user - users._id
+watchHistory.videos < videos._id

@@ -1,0 +1,9 @@
+File System (Streams): A stream is an abstract interface for working with data that is "streamed in chunks, rather than being read or written all at once (it will help to save system memory)
+
+Streams in fs module follow the Node.js stream API:
+    1. Readable streams: for reading data 
+    2. writable streams: for writing data 
+    3. Duplex Streams: Both readable and writable 
+    4. Transform Streams: Duplex streams that can modify or transform the data as it is written and read.
+
+Example: suppose we want to read any file that is 1gb in size in that case if we normally read that file in then the 1gb ram of our server will be used to overcome this problem the fs streams are introduced that reads big files in chunks ny chunks that helps save the memory on server.
