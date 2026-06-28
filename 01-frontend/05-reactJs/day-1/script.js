@@ -114,3 +114,8 @@ console.log(restSkills); // ["react", "next"]
 
 console.log(val);
 console.log(user);
+
+// default export
+
+
+// named export 
