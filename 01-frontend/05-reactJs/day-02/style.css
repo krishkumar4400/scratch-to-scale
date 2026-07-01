@@ -1,0 +1,30 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+#box {
+    height: 100px;
+    width: 100px;
+    background-color: red;
+}
+
+div {
+    height: 200px;
+    width: 200px;
+    background-color: blue;
+    color: white;
+}
+
+#circle {
+    height: 300px;
+    width: 300px;
+    background-color: red;
+    border-radius: 50%;
+}

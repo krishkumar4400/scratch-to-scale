@@ -1,6 +1,8 @@
 // destructuring
 
 import  user, { val } from "./app.js";
+import name from './app.js';
+import { maths, physics, chem } from "./app.js";
 
 // array
 var arr1 = [10, 20, 30, 40];
