@@ -5,6 +5,7 @@ const Card = ({ allUsers, setAllUser }) => {
     const copyUser = [...allUsers];
     copyUser.splice(index, 1);
     setAllUser(copyUser);
+    localStorage.setItem("all-users", JSON.stringify(copyUser));
   };
   const removeUser = (user) => {
     console.log(user);

@@ -14,8 +14,10 @@ const App = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    setAllUsers([...allUsers, { name, url, role, description }]);
-    localStorage.setItem("all-users", JSON.stringify(allUsers));
+    const oldUsers = [...allUsers];
+    oldUsers.push({ name, url, role, description });
+    setAllUsers(oldUsers);
+    localStorage.setItem("all-users", JSON.stringify(oldUsers));
     setName("");
     setUrl("");
     setRole("");
