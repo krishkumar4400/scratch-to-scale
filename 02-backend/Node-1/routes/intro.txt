@@ -1,9 +1,0 @@
-Routes 
-    1. Routes in a simple way
-    2. Handling Dynamic Routes 
-    3. Middleware - like Functionality
-    4. Handling URL - encoded Data (Form Submissions)
-
-*** Middleware is a concept were a function can be used to process incoming request before they reach there final destination and handle the outgoing response before they are sent back to the client middleware functions are often used for login, authentication, valiation etc.  
-
-*** whenever user submit a form on html website then that request is created as a url encoded data.

@@ -1,9 +1,7 @@
-
-
 import jwt from "jsonwebtoken";
 
 /**
- * 
+ *
  * @type {import("express").RequestHandler}
  * @type {import("express").Request}
  * @type {import("express").Response}
@@ -39,4 +37,3 @@ export const isAuthenticated = (req, res, next) => {
   }
   next();
 };
-

@@ -1,5 +1,0 @@
-Piping Streams
-    Piping streams in Node.js allows you to efficiently transfer data from one stream to another, processing it in chunks.
-    
-    suppose we have multiple streams and we want to connect it one by one then we use the piping.
-

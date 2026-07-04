@@ -1,5 +1,0 @@
-prisma setup from prisma site docs
-
-if not prisma client depency is available then run: npm install @prisma/client
-
-migration setup with env

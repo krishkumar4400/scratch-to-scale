@@ -1,5 +1,0 @@
-npm i mysql2
-
-validate env
-
-mysql configuration
