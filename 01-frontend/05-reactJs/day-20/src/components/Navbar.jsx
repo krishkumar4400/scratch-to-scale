@@ -1,4 +1,3 @@
-import React from "react";
 import { useContext } from "react";
 import { UserDataContext } from "../context/UserContext";
 import { ThemeContextProvider } from "../context/ThemeContext";
