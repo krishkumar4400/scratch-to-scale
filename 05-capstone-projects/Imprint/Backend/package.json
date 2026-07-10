@@ -8,7 +8,8 @@
     "imagekit": "^6.0.0",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.2.4",
-    "multer": "^2.1.1"
+    "multer": "^2.1.1",
+    "uuid": "^14.0.1"
   },
   "name": "instagram-clone",
   "version": "1.0.0",
