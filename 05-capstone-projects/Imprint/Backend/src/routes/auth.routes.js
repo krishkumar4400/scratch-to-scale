@@ -14,14 +14,14 @@ const authRouter = Router();
 /**
  * Register route
  * POST /api/v1/auth/register
- * req.body => name,email,password
+ * req.body => {name,email,password}
  */
 authRouter.route("/register").post(registerUser);
 
 /**
  * Login route
  * POST /api/v1/auth/login
- * req.body => name,email,password
+ * req.body => {username | email,password}
  */
 authRouter.route("/login").post(loginUser);
 

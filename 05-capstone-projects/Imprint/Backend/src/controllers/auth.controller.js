@@ -1,10 +1,11 @@
 const userModel = require("../Model/User.Model.js");
-const bcrypt = require("bcryptjs");
+const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 async function registerUser(req, res) {
   try {
-    const { username, email, password } = req.body;
+    const { username, email, password, bio, profilePicture } = req.body;
+    console.log(req.body);
     if (!username || !email || !password) {
       return res.status(400).json({
         message: "All fields are required",
@@ -28,6 +29,8 @@ async function registerUser(req, res) {
       username,
       email,
       password: hashedPassword,
+      bio,
+      profilePicture,
     });
 
     const token = jwt.sign(
@@ -64,12 +67,6 @@ async function registerUser(req, res) {
 async function loginUser(req, res) {
   try {
     const { username, email, password } = req.body;
-    if (!username || !email || !password) {
-      return res.status(400).json({
-        message: "All fields are required",
-        success: false,
-      });
-    }
 
     const user = await userModel
       .findOne({
@@ -84,7 +81,7 @@ async function loginUser(req, res) {
       });
     }
 
-    const isPasswordMatch = bcrypt.compare(password, user.password);
+    const isPasswordMatch = await bcrypt.compare(password, user.password);
     if (!isPasswordMatch) {
       return res.status(401).json({
         message: "Invalid credentials",

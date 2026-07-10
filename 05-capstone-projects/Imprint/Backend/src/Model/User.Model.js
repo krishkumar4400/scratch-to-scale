@@ -1,21 +1,25 @@
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
+  profilePicture: {
+    type: String,
+    default: `https://ik.imagekit.io/xvni7jpsb/OIP.webp?updatedAt=1772777496829`,
+  },
   username: {
     type: String,
-    required: true,
+    required: [true, "username is required"],
     trim: true,
     lowercase: true,
     index: true,
-    unique: true,
+    unique: [true, "username already exists"],
   },
   email: {
     type: String,
-    required: true,
+    required: [true, "Email is required"],
     trim: true,
     lowercase: true,
     index: true,
-    unique: true,
+    unique: [true, "Email already exists"],
   },
   fullname: {
     type: String,
@@ -23,9 +27,12 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true,
+    required: [true, "Password is required"],
     trim: true,
     select: false,
+  },
+  bio: {
+    type: String,
   },
   isEmailVerified: {
     type: Boolean,
