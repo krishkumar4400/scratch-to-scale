@@ -6,8 +6,6 @@ const mongoose = require("mongoose");
 
 async function createPost(req, res) {
   try {
-    console.log(req.file);
-    console.log(req.body);
 
     const { caption } = req.body;
     const file = req.file;
@@ -24,7 +22,6 @@ async function createPost(req, res) {
       folder: "/insta/posts", // specified folder path
     });
 
-    console.log(uploadResult);
 
     const post = await postModel.create({
       mediaUrl: uploadResult.url,
@@ -34,12 +31,12 @@ async function createPost(req, res) {
       userId: req.userId,
     });
 
-    console.log(post);
 
     return res.status(201).json({
       message: "Post created successfully",
       success: true,
     });
+    
   } catch (error) {
     console.error(error);
     return res.status(500).json({

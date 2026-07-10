@@ -9,9 +9,10 @@ const {
   authenticationMiddleware,
   isAuthenticated,
 } = require("../middleware/auth.middleware.js");
-const multer = require("multer");
+const upload = require("../middleware/multer.middleware.js");
 
-const upload = multer({ storage: multer.memoryStorage() });
+
+
 
 const postRouter = express.Router();
 
@@ -59,7 +60,5 @@ postRouter.get(
   isAuthenticated,
   getPostById,
 );
-
-
 
 module.exports = postRouter;
