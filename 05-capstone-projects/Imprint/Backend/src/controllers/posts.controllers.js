@@ -6,7 +6,6 @@ const mongoose = require("mongoose");
 
 async function createPost(req, res) {
   try {
-
     const { caption } = req.body;
     const file = req.file;
 
@@ -22,7 +21,6 @@ async function createPost(req, res) {
       folder: "/insta/posts", // specified folder path
     });
 
-
     const post = await postModel.create({
       mediaUrl: uploadResult.url,
       mediaType: uploadResult.fileType,
@@ -31,12 +29,10 @@ async function createPost(req, res) {
       userId: req.userId,
     });
 
-
     return res.status(201).json({
       message: "Post created successfully",
       success: true,
     });
-    
   } catch (error) {
     console.error(error);
     return res.status(500).json({
@@ -75,19 +71,22 @@ async function getPostById(req, res) {
     }
 
     // validate ObjectId format
-    if (!mongoose.Types.ObjectId.isValid(postId)) {
+    if (
+      !mongoose.Types.ObjectId.isValid(postId) ||
+      !mongoose.Types.ObjectId.isValid(req.userId)
+    ) {
       return res.status(400).json({
         message: "Invalid post id format",
         success: false,
       });
     }
 
-    const post = await postModel.findById(postId);
+    const post = await postModel.findOne({ _id: postId, userId: req.userId });
     console.log(post);
 
     if (!post) {
       return res.status(404).json({
-        message: "Post is not found",
+        message: "Post is not found or not authorized",
         success: false,
       });
     }
@@ -114,13 +113,13 @@ async function getPostsByUserId(req, res) {
         .json({ success: false, message: "Invalid user id" });
     }
 
-    const posts = await postModel.find({ userId }, "").sort({ createdAt: -1 });
+    const posts = await postModel.find({ userId }).sort({ createdAt: -1 });
     console.log(posts);
     return res.status(200).json({
-        success: true,
-        posts
+      success: true,
+      posts,
     });
-    
+
   } catch (error) {
     console.error(error);
     return res.status(500).json({

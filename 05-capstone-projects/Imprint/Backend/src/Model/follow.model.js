@@ -1,0 +1,23 @@
+const mongoose = require("mongoose");
+
+const followSchema = new mongoose.Schema(
+  {
+    follower: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: [true, "Follower id is missing"],
+    },
+    followee: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: [true, "Followee id is missing"],
+    },
+  },
+  {
+    timestamps: true,
+  },
+);
+
+const followModel =
+  mongoose.models.Follow || mongoose.model("Follow", followSchema);
+module.exports = followModel;
