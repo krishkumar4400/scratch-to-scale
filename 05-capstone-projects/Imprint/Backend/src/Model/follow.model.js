@@ -18,6 +18,11 @@ const followSchema = new mongoose.Schema(
   },
 );
 
+followSchema.index({ follower: 1, followee: 1 }, { unique: true });
+followSchema.index({ followee: 1, follower: 1 }, { unique: true });
+
 const followModel =
   mongoose.models.Follow || mongoose.model("Follow", followSchema);
 module.exports = followModel;
+
+0;
