@@ -1,8 +1,10 @@
 const imagekit = require("../config/imagekit.js");
-const postModel = require("../Model/posts.models.js");
+const postModel = require("../Model/posts.model.js");
 const { v4: uuidv4 } = require("uuid");
 const { sanitizeFileName } = require("../utils/sanitizeFileName.js");
 const mongoose = require("mongoose");
+const likesModel = require("../Model/likes.model.js");
+const commentsModel = require("../Model/comments.model.js");
 
 async function createPost(req, res) {
   try {
@@ -119,7 +121,6 @@ async function getPostsByUserId(req, res) {
       success: true,
       posts,
     });
-
   } catch (error) {
     console.error(error);
     return res.status(500).json({
@@ -129,9 +130,186 @@ async function getPostsByUserId(req, res) {
   }
 }
 
+async function likePost(req, res) {
+  try {
+    const { postId } = req.params;
+    const userId = req.userId;
+
+    if (!postId) {
+      return res.status(400).json({
+        message: "Post id is missing",
+        success: false,
+      });
+    }
+
+    const post = await postModel.findById(postId);
+    if (!post) {
+      return res.status(404).json({
+        message: "Post not found",
+        success: false,
+      });
+    }
+
+    const isAlreadyLiked = await likesModel.findOne({
+      postId,
+      userId,
+    });
+
+    if (isAlreadyLiked) {
+      return res.status(409).json({
+        message: "You have already liked the post",
+        success: false,
+      });
+    }
+
+    const like = await likesModel.create({
+      userId,
+      postId,
+    });
+
+    if (!like) {
+      return res.status(400).json({
+        message: "Unable to like the post",
+        success: false,
+      });
+    }
+
+    return res.status(200).json({
+      message: "You liked the post successfully",
+      success: true,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      message: "Internal server error",
+      success: false,
+      error,
+    });
+  }
+}
+
+async function unLikePost(req, res) {
+  try {
+    const { postId } = req.params;
+    const userId = req.userId;
+
+    if (!postId) {
+      return res.status(400).json({
+        message: "Post id is missing",
+        success: false,
+      });
+    }
+
+    const post = await postModel.findById(postId);
+    if (!post) {
+      return res.status(404).json({
+        message: "Post not found",
+        success: false,
+      });
+    }
+
+    const isAlreadyLiked = await likesModel.findOne({
+      postId,
+      userId,
+    });
+
+    if (!isAlreadyLiked) {
+      return res.status(409).json({
+        message: "You have't liked the post",
+        success: false,
+      });
+    }
+
+    const like = await likesModel.findByIdAndDelete(isAlreadyLiked._id);
+
+    if (!like) {
+      return res.status(400).json({
+        message: "Unable to unlike the post",
+        success: false,
+      });
+    }
+
+    return res.status(200).json({
+      message: "You unliked the post successfully",
+      success: true,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      message: "Internal server error",
+      success: false,
+      error,
+    });
+  }
+}
+
+async function commentPost(req, res) {
+  try {
+    const { postId } = req.params;
+    const userId = req.userId;
+    const { content } = req.body;
+
+    if (!postId) {
+      return res.status(400).json({
+        message: "Post id is missing",
+        success: false,
+      });
+    }
+
+    if (!content) {
+      return res.status(400).json({
+        message: "Content is missing",
+        success: false,
+      });
+    }
+
+    const post = await postModel.findById(postId);
+    if (!post) {
+      return res.status(404).json({
+        message: "Post not found",
+        success: false,
+      });
+    }
+
+    const comment = await commentsModel.create({
+      userId,
+      postId,
+      content,
+    });
+
+    return res.status(200).json({
+      message: "Your comment added on this post successfully",
+      success: true,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      message: "Internal server error",
+      success: false,
+      error,
+    });
+  }
+}
+
+async function deleteComment(req, res) {
+  try {
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      message: "Internal server error",
+      success: false,
+      error,
+    });
+  }
+}
+
 module.exports = {
   createPost,
   getAllPosts,
   getPostById,
   getPostsByUserId,
+  likePost,
+  unLikePost,
+  commentPost,
+  deleteComment,
 };
