@@ -6,7 +6,9 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [bio, setBio] = useState("");
-  const [togglePage, setTogglePage] = useState("login");
+  const [togglePage, setTogglePage] = useState(
+    localStorage.getItem("page") || "login",
+  );
 
   const data = useContext(AuthContext);
   console.log(data);
@@ -18,6 +20,17 @@ const LoginPage = () => {
       console.error(error);
     }
   };
+
+  const toggle = () => {
+    if (togglePage === "login") {
+      setTogglePage("signup");
+      localStorage.setItem("page", "signup");
+    } else {
+      setTogglePage("login");
+      localStorage.setItem("page", "login");
+    }
+  };
+
   return (
     <div className="h-screen w-full flex items-center justify-center bg-slate-950 text-white p-5">
       <div
@@ -87,11 +100,7 @@ const LoginPage = () => {
             <p className="text-xs font-light text-gray-400">
               Already have an account?{" "}
               <span
-                onClick={() => {
-                  togglePage === "login"
-                    ? setTogglePage("signup")
-                    : setTogglePage("login");
-                }}
+                onClick={toggle}
                 className="text-blue-400 cursor-pointer hover:underline"
               >
                 {togglePage === "login" ? "SignUp" : "Login"}
