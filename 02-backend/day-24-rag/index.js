@@ -16,8 +16,6 @@ const dataBuffer = fs.readFileSync("./story.pdf");
 
 const data = await pdf(dataBuffer);
 
-// console.log(data);
-
 // chunking
 const splitter = new RecursiveCharacterTextSplitter({
   chunkSize: 500,
@@ -25,8 +23,6 @@ const splitter = new RecursiveCharacterTextSplitter({
 });
 
 const texts = await splitter.splitText(data.text);
-// console.log(texts);
-// console.log(texts.length);
 
 // embedding
 import { MistralAIEmbeddings } from "@langchain/mistralai";
@@ -39,16 +35,24 @@ const docs = await Promise.all(
   texts.map(async (text) => {
     const embedding = await embeddings.embedQuery(text);
     return { pageContent: text, metadata: {}, embedding };
-  })
+  }),
 );
-console.log(docs);
 
 // store embeddings in vector db
-import { PineconeStore } from "@langchain/pinecone";
-import { Pinecone as PineconeClient } from "@pinecone-database/pinecone";
+import { Pinecone } from "@pinecone-database/pinecone";
 
-const pinecone = new PineconeClient();
-const vectorStore = new PineconeStore(docs, {
-  pineconeIndex,
-  maxConcurrency: 5,
+const pc = new Pinecone({
+  apiKey: process.env.PINECONE_API_KEY,
 });
+
+const index = pc.index("demo");
+
+// store in db
+const result = await index.upsert({
+  records: docs.map((doc, i) => ({
+    id: `doc-${i}`,
+    values: doc.embedding,
+    metadata: doc.metadata,
+  })),
+});
+console.log(result);
