@@ -34,7 +34,7 @@ const embeddings = new MistralAIEmbeddings({
 const docs = await Promise.all(
   texts.map(async (text) => {
     const embedding = await embeddings.embedQuery(text);
-    return { pageContent: text, metadata: {}, embedding };
+    return { pageContent: text, embedding };
   }),
 );
 

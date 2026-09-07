@@ -80,3 +80,18 @@ const result = await index.upsert(records);
 console.log("Uploaded to Pinecone");
 
 console.log(result);
+
+// ===============================
+// 7. QUERY
+// ===============================
+const queryEmbedding = await embeddings.embedQuery(
+  "Tell me about arav's internship experience",
+);
+console.log(queryEmbedding);
+
+const queryResult = await index.query({
+  vector: queryEmbedding,
+  topK: 3,
+  includeMetadata: true,
+});
+console.log(queryResult);
