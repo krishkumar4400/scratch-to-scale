@@ -1,6 +1,14 @@
 import "dotenv/config";
 
-const env = {
+type ENV = {
+    readonly PORT: string,
+    readonly MONGO_URI: string,
+    readonly MISTRAL_API_KEY: string,
+    readonly GOOGLE_API_KEY: string,
+    readonly COHERE_API_KEY: string,
+}
+
+const env: ENV = {
     PORT: process.env.PORT!,
     MONGO_URI: process.env.MONGO_URI!,
     MISTRAL_API_KEY: process.env.MISTRAL_API_KEY!,
