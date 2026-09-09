@@ -33,6 +33,15 @@ const solutionNode: GraphNode<typeof state> = async (state) => {
 const judgeNode: GraphNode<typeof state> = async (state) => {
     const { problem, solution_1, solution_2 } = state;
 
+    /**
+     * judge response = {
+     *      solution_1_score: 7,
+     *      solution_2_score: 3,
+     *      solution_1_reasoning: "reasoning for solution 1",
+     *      solution_2_reasoning: "reasoning for solution 2"
+     * }
+     */
+
     const judge = createAgent({
         model: geminiModel,
         tools: [],
