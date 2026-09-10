@@ -1,6 +1,6 @@
 /** Advance JavaScript
  *
- * Object Oriented COncepts in javaScript
+ * Object Oriented Concepts in javaScript
  *
  * -
  */
