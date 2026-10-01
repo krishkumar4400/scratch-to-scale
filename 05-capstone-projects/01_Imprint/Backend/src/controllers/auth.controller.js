@@ -20,7 +20,7 @@ async function registerUser(req, res) {
       return res.status(409).json({
         message: "User with this username or email id already exists",
         success: false,
-        user
+        user,
       });
     }
 
@@ -55,7 +55,7 @@ async function registerUser(req, res) {
       .json({
         message: "User registered successfully",
         success: true,
-        user
+        user,
       });
   } catch (error) {
     console.error(error);
@@ -112,7 +112,7 @@ async function loginUser(req, res) {
       .json({
         message: "User logged in successfully",
         success: true,
-        user
+        user,
       });
   } catch (error) {
     console.error(error);
@@ -161,6 +161,17 @@ async function getCurrentUser(req, res) {
     });
   }
 }
+
+const verifyUser = (req, res, next) => {
+  const token = req.cookies.token;
+  if (!token) {
+    return res.status(401).json({
+      message: "Unauthorized: No token provided",
+      success: false,
+    });
+  }
+  next();
+};
 
 module.exports = {
   registerUser,
