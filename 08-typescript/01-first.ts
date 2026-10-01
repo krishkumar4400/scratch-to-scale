@@ -2,4 +2,5 @@ function greet(name: string): string {
     return `Hello ${name}`;
 }
 
-console.log(greet("Krish"));
+const username: string = "krish";
+console.log(greet(username));
