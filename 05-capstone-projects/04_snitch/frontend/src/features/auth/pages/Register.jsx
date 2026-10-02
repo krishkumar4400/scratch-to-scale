@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import useAuth from "../hooks/useAuth.js";
+import toast from "react-hot-toast";
 
 export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
@@ -8,12 +10,24 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [contactNumber, setContactNumber] = useState("");
 
+  const { handleRegister } = useAuth();
+
   const navigate = useNavigate();
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
-    console.log("form submitted");
-    console.log(fullName, email, password, contactNumber);
+    const result = await handleRegister({
+      fullName,
+      email,
+      password,
+      contactNumber,
+    });
+    if (result.success) {
+        toast.success(result.message);
+      navigate("/products");
+    } else {
+      toast.error(result.message);
+    }
   };
 
   return (
@@ -71,6 +85,7 @@ export default function Register() {
                   type="text"
                   name="fullName"
                   placeholder="John Doe"
+                  required
                   className="w-full rounded-xl border border-white/10 bg-[#080d15] px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-600 hover:border-white/20 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10"
                 />
               </div>
@@ -93,6 +108,7 @@ export default function Register() {
                   type="email"
                   name="email"
                   placeholder="you@example.com"
+                  required
                   className="w-full rounded-xl border border-white/10 bg-[#080d15] px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-600 hover:border-white/20 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10"
                 />
               </div>
@@ -116,6 +132,7 @@ export default function Register() {
                     type={showPassword ? "text" : "password"}
                     name="password"
                     placeholder="Enter your password"
+                    required
                     className="w-full rounded-xl border border-white/10 bg-[#080d15] px-4 py-3 pr-12 text-sm text-white outline-none transition placeholder:text-slate-600 hover:border-white/20 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10"
                   />
 
@@ -180,6 +197,7 @@ export default function Register() {
                   name="contactNumber"
                   inputMode="tel"
                   placeholder="+91 98765 43210"
+                  required
                   className="w-full rounded-xl border border-white/10 bg-[#080d15] px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-600 hover:border-white/20 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10"
                 />
               </div>

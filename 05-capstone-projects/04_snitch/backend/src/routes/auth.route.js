@@ -14,7 +14,7 @@ import {
 
 const router = Router();
 
-router.post("/register", validateRegisterUser(), validate, registerUser);
+router.post("/register", registerUser);
 router.post("/login", loginUser);
 router.get("/user", authenticationMiddleware, isAuthenticated, getUser);
 router.post("/logout", authenticationMiddleware, isAuthenticated, logoutUser);

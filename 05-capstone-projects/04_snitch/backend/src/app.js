@@ -4,7 +4,6 @@ import dotenv from "dotenv";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import router from "./routes/auth.route.js";
-import env from "./config/env.js";
 
 dotenv.config();
 

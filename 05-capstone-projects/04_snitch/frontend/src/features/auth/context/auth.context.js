@@ -1,6 +1,3 @@
+import { createContext } from "react";
 
-
-
-export function AuthProvider({children}) {
-
-}
+export const AuthContext = createContext();
