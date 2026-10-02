@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import env from "../config/env.js";
 
 const userSchema = new mongoose.Schema(
   {
@@ -28,15 +29,7 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: [
-        "admin",
-        "superadmin",
-        "moderator",
-        "seller",
-        "buyer",
-        "guest",
-        "manager",
-      ],
+      enum: ["admin", "seller", "buyer", "manager"],
       default: "buyer",
     },
     refreshToken: {
@@ -62,6 +55,27 @@ userSchema.pre("save", async function () {
   }
   this.password = await bcrypt.hash(this.password, 10);
 });
+
+userSchema.methods.comparePassword = async function (candidatePassword) {
+  return await bcrypt.compare(candidatePassword, this.password);
+};
+
+userSchema.methods.generateAccessToken = function () {
+  return jwt.sign({ userId: this._id }, env.ACCESS_TOKEN_SECRET, {
+    expiresIn: "5m",
+  });
+};
+userSchema.methods.generateRefreshToken = function () {
+  return jwt.sign(
+    {
+      userId: this._id,
+    },
+    env.REFRESH_TOKEN_SECRET,
+    {
+      expiresIn: "7d",
+    },
+  );
+};
 
 const userModel = mongoose.models.User || mongoose.model("User", userSchema);
 export default userModel;

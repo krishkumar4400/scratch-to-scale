@@ -3,6 +3,8 @@ import cors from "cors";
 import dotenv from "dotenv";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
+import router from "./routes/auth.route.js";
+import env from "./config/env.js";
 
 dotenv.config();
 
@@ -26,6 +28,8 @@ app.get("/health", (req, res) => {
     message: "Server is running",
   });
 });
+
+app.use("/api/v1/auth", router);
 
 app.use((err, req, res, next) => {
   console.error(err);
