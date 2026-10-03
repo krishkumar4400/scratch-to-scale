@@ -21,4 +21,3 @@ console.log(Math.ceil(y));
 const a = 5.5;
 console.log(Math.floor(a)); // 5
 console.log(Math.ceil(a)); // 6
-
