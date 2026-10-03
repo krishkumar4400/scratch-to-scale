@@ -1,7 +1,7 @@
 // const dotenv = require('dotenv');
 require('dotenv/config');
 
-const { defineConfig } = require("drizzle-kit");
+const { defineConfig } = require("./node_modules/drizzle-kit");
 
 // dotenv.config(); // 
 
