@@ -1,4 +1,3 @@
-import React from "react";
 
 const Card = ({ allUsers, setAllUser }) => {
   const deleteUser = (index) => {
