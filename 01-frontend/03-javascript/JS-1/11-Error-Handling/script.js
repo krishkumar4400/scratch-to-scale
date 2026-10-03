@@ -12,10 +12,13 @@ console.log(a + b);
 console.log(a + b);
 console.log(a + b);
 try {
-    console.log(a + c);
+  console.log(a + c);
 } catch (error) {
-    console.log(error.message);
+  console.log(error.message);
+} finally {
+  console.log("");
 }
+
 console.log(a + b);
 console.log(a + b);
 console.log(a + b);

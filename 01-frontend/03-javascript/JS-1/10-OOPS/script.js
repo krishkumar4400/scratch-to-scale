@@ -2,27 +2,27 @@
 
 // object:
 const student = {
-    fullName: "krish kumar",
-    marks: 99.99,
-    printMarks: function() {
-        console.log("Marks: " + this.marks)
-    }
+  fullName: "krish kumar",
+  marks: 99.99,
+  printMarks: function () {
+    console.log("Marks: " + this.marks);
+  },
 };
 
-let arr = [1,2,3,4]
+let arr = [1, 2, 3, 4];
 
 const employee = {
-    calcTax() {
-        console.log("Tax rate is 12%");
-    },
+  calcTax() {
+    console.log("Tax rate is 12%");
+  },
 
-    calcTax2 : function() {
-        console.log("Tax rate is 20%");
-    }
+  calcTax2: function () {
+    console.log("Tax rate is 20%");
+  },
 };
 
 const karanArjun = {
-    salary: 500000
+  salary: 500000,
 };
 
 karanArjun.__proto__ = employee;
@@ -220,16 +220,13 @@ u1.viewData();
 console.log(u1.name, " ", u1.email);
 
 class Admin extends User {
-    constructor(name, email) {
-        super(name, email);
-    }
+  constructor(name, email) {
+    super(name, email);
+  }
 
-    editData() {
-        DATA = "Some new Value";
-    }
+  editData() {
+    DATA = "Some new Value";
+  }
 }
 
-admin1 = new Admin("admin", "admin.college@gmail.com");
-
-
-// next topics: 
+let admin1 = new Admin("admin", "admin.college@gmail.com");
