@@ -51,11 +51,11 @@ const ProductDetail = () => {
         {/* Product Container */}
         <div className="grid overflow-hidden rounded-3xl bg-white shadow-sm lg:grid-cols-2">
           {/* Product Image */}
-          <div className="flex min-h-[500px] items-center justify-center bg-gray-50 p-10">
+          <div className="flex min-h-125 items-center justify-center bg-gray-50 p-10">
             <img
               src={product.image}
               alt={product.title}
-              className="max-h-[450px] max-w-full object-contain transition-transform duration-500 hover:scale-105"
+              className="max-h-112.5 max-w-full object-contain transition-transform duration-500 hover:scale-105"
             />
           </div>
 
@@ -114,18 +114,18 @@ const ProductDetail = () => {
               <div className="flex w-fit items-center overflow-hidden rounded-lg border border-gray-300">
                 <button
                   onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}
-                  className="px-4 py-2 text-xl transition hover:bg-gray-100"
+                  className="px-4 py-2 text-xl transition text-gray-500 hover:bg-gray-100"
                 >
                   −
                 </button>
 
-                <span className="min-w-12 px-4 text-center font-semibold">
+                <span className="min-w-12 text-gray-600 px-4 text-center font-semibold">
                   {quantity}
                 </span>
 
                 <button
                   onClick={() => setQuantity((prev) => prev + 1)}
-                  className="px-4 py-2 text-xl transition hover:bg-gray-100"
+                  className="px-4 py-2 text-xl transition hover:bg-gray-100 text-gray-500"
                 >
                   +
                 </button>
