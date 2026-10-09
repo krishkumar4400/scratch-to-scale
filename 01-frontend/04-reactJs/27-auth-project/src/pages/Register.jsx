@@ -24,7 +24,8 @@ const Register = () => {
     formState: { errors, isValid },
   } = useForm();
 
-  const { registeredUsers, setRegisteredUsers } = useContext(AuthContext);
+  const { registeredUsers, setRegisteredUsers, setLoggedInUser } =
+    useContext(AuthContext);
   const navigate = useNavigate();
 
   const formSubmit = (data) => {
@@ -40,9 +41,11 @@ const Register = () => {
     const users = [...registeredUsers, data];
 
     setRegisteredUsers(users);
+    setLoggedInUser(data);
+    localStorage.setItem("loggedInUser", JSON.stringify(data));
     localStorage.setItem("registeredUsers", JSON.stringify(users));
     reset();
-    navigate("/");
+    navigate("/main");
   };
 
   return (
