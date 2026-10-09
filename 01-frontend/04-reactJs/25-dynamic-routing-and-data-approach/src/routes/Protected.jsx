@@ -10,4 +10,3 @@ const Protected = ({ children }) => {
 };
 
 export default Protected;
-3
