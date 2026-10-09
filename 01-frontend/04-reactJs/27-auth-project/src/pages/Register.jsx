@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
 import {
   UserRound,
   Mail,
@@ -9,6 +10,8 @@ import {
   EyeOff,
   ArrowRight,
 } from "lucide-react";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext.jsx";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -20,10 +23,16 @@ const Register = () => {
     formState: { errors, isValid },
   } = useForm();
 
-  const formSubmit = (data) => {
-    console.log(data);
+  const { registeredUsers, setRegisteredUsers } = useContext(AuthContext);
+  const navigate = useNavigate();
 
+  const formSubmit = (data) => {
+    const users = [...registeredUsers, data];
+
+    setRegisteredUsers(users);
+    localStorage.setItem("registeredUsers", JSON.stringify(users));
     reset();
+    navigate("/");
   };
 
   return (

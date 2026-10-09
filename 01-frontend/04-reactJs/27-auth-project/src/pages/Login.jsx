@@ -2,6 +2,9 @@ import { useState } from "react";
 import { Link } from "react-router";
 import { Mail, LockKeyhole, Eye, EyeOff, ArrowRight } from "lucide-react";
 import { useForm } from "react-hook-form";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
+import { useNavigate } from "react-router";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -12,8 +15,12 @@ const Login = () => {
     formState: { errors, isValid },
   } = useForm();
 
+  const { loggedInUser, setLoggedInUser } = useContext(AuthContext);
+  const navigate = useNavigate();
+
   const formSubmit = (data) => {
-    console.log(data);
+    setLoggedInUser(data);
+    navigate("/");
 
     reset();
   };
