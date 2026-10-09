@@ -3,6 +3,9 @@ import Home from "../pages/Home";
 import About from "../pages/About";
 import Products from "../pages/Products";
 import MainLayout from "../layout/MainLayout";
+import AuthLayout from "../layout/AuthLayout";
+import Register from "../pages/Register";
+import Login from "../pages/Login";
 
 const AppRoutes = () => {
   /**
@@ -34,12 +37,26 @@ const AppRoutes = () => {
           element: <Home />,
         },
         {
-          path: "/about",
+          path: "about",
           element: <About />,
         },
         {
-          path: "/products",
+          path: "products",
           element: <Products />,
+        },
+      ],
+    },
+    {
+      path: "/auth",
+      element: <AuthLayout />,
+      children: [
+        {
+          path: "register",
+          element: <Register />,
+        },
+        {
+          path: "login",
+          element: <Login />,
         },
       ],
     },
