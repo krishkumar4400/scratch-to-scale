@@ -2,9 +2,12 @@ import { RouterProvider, createBrowserRouter } from "react-router";
 import Home from "../pages/Home";
 import About from "../pages/About";
 import Products from "../pages/Products";
-import Navbar from "../components/Navbar";
+import MainLayout from "../layout/MainLayout";
 
 const AppRoutes = () => {
+  /**
+   * 
+
   const router = createBrowserRouter([
     {
       path: "/",
@@ -19,13 +22,29 @@ const AppRoutes = () => {
       element: <Products />,
     },
   ]);
+   */
 
-  return (
-    <div>
-      <Navbar />
-      <RouterProvider router={router} />
-    </div>
-  );
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <MainLayout />,
+      children: [
+        {
+          path: "",
+          element: <Home />,
+        },
+        {
+          path: "/about",
+          element: <About />,
+        },
+        {
+          path: "/products",
+          element: <Products />,
+        },
+      ],
+    },
+  ]);
+  return <RouterProvider router={router} />;
 };
 
 export default AppRoutes;
