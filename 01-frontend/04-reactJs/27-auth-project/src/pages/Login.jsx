@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -15,14 +16,23 @@ const Login = () => {
     formState: { errors, isValid },
   } = useForm();
 
-  const { loggedInUser, setLoggedInUser } = useContext(AuthContext);
+  const { setLoggedInUser, registeredUsers } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const formSubmit = (data) => {
-    setLoggedInUser(data);
-    navigate("/");
+    const user = registeredUsers.find((val) => {
+      return val.email === data.email && val.password === data.password;
+    });
 
+    if (!user) {
+      toast.error("User not found or invalid credentials");
+      return;
+    }
+    setLoggedInUser(user);
+    localStorage.setItem("loggedInUser", JSON.stringify(user));
+    toast.success("You are now logged in");
     reset();
+    navigate("/main");
   };
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-10">

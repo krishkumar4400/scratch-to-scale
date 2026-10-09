@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext.jsx";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -27,6 +28,15 @@ const Register = () => {
   const navigate = useNavigate();
 
   const formSubmit = (data) => {
+    const user = registeredUsers.find((val) => {
+      return val.email === data.email;
+    });
+
+    if (user) {
+      toast.error("Email already exists");
+      return;
+    }
+    toast.success("You have been registered successfully");
     const users = [...registeredUsers, data];
 
     setRegisteredUsers(users);

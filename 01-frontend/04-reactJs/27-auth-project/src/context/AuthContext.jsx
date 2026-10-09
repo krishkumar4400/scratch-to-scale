@@ -7,12 +7,10 @@ export const AuthContextProvider = ({ children }) => {
   const [registeredUsers, setRegisteredUsers] = useState(
     JSON.parse(localStorage.getItem("registeredUsers")) || [],
   );
-  const [loggedInUser, setLoggedInUser] = useState(null);
+  const [loggedInUser, setLoggedInUser] = useState(
+    JSON.parse(localStorage.getItem("loggedInUser")),
+  );
   const [loading, setLoading] = useState(false);
-
-  console.log("registered users -> ", registeredUsers);
-  console.log("logged in users -> ", loggedInUser);
-
 
   return (
     <AuthContext.Provider

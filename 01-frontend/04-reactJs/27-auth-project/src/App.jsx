@@ -3,6 +3,8 @@ import AuthLayout from "./lauout/AuthLayout.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import AppLayout from "./lauout/AppLayout.jsx";
+import Home from "./pages/Home.jsx";
+import ProtectedRoute from "./routes/ProtectedRoute.jsx";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -22,7 +24,19 @@ const App = () => {
     },
     {
       path: "/main",
-      element: <AppLayout />,
+      element: <ProtectedRoute />,
+      children: [
+        {
+          path: "",
+          element: <AppLayout />,
+          children: [
+            {
+              path: "",
+              element: <Home />,
+            },
+          ],
+        },
+      ],
     },
   ]);
   return <RouterProvider router={router} />;
