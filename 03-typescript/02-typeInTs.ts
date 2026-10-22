@@ -8,4 +8,3 @@ let channelName = "ChaiAurCode";
 // type annotation
 let chaiFlavour: string = "Masala Chai";
 chaiFlavour = "Ginger tea";
-
