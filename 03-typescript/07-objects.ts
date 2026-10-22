@@ -87,3 +87,28 @@ const order: Order = {
     address: [{ street: "street1", pin: 123 }, { street: "street2", pin: 456 }]
 }
 
+//
+
+type Chai = {
+    name: string;
+    price: number;
+    isHot: boolean;
+}
+
+const updateChai = (updates: Partial<Chai>) => {
+    console.log("Updating chai with", updates);
+}
+
+updateChai({});
+updateChai({price: 10});
+updateChai({price: 10, name: "new chai"});
+updateChai({price: 10, name: "new chai", isHot: false});
+
+type ChaiOrder = {
+    name?: string;
+    quantity?: number
+};
+const placeOrder = (order: Required<ChaiOrder>) => {
+    console.log(order);
+}
+placeOrder({quantity: 2, name: "demo chai"});
