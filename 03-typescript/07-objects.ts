@@ -87,7 +87,7 @@ const order: Order = {
     address: [{ street: "street1", pin: 123 }, { street: "street2", pin: 456 }]
 }
 
-//
+// Partial and Required
 
 type Chai = {
     name: string;
@@ -100,9 +100,9 @@ const updateChai = (updates: Partial<Chai>) => {
 }
 
 updateChai({});
-updateChai({price: 10});
-updateChai({price: 10, name: "new chai"});
-updateChai({price: 10, name: "new chai", isHot: false});
+updateChai({ price: 10 });
+updateChai({ price: 10, name: "new chai" });
+updateChai({ price: 10, name: "new chai", isHot: false });
 
 type ChaiOrder = {
     name?: string;
@@ -111,4 +111,28 @@ type ChaiOrder = {
 const placeOrder = (order: Required<ChaiOrder>) => {
     console.log(order);
 }
-placeOrder({quantity: 2, name: "demo chai"});
+placeOrder({ quantity: 2, name: "demo chai" });
+
+// Peak
+type Chai1 = {
+    name: string;
+    price: number;
+    isHot: boolean;
+    ingredients: string[];
+}
+
+type BasicChaiInfo = Pick<Chai1, "name" | "price">;
+
+const chaiInfo: BasicChaiInfo = {
+    name: "Lemon Tea",
+    price: 2
+};
+
+// Omit
+type ChaiInfo1 = Omit<Chai1, "isHot">;
+
+const chaiInfo1: ChaiInfo1 = {
+    name: "chai name",
+    price: 22,
+    ingredients: ["no ingredients"]
+}
