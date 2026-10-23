@@ -103,17 +103,17 @@ interface User {
     age: number;
 }
 
-const u: User  = {
+const u: User = {
     age: 21,
     name: "krish"
 }
 console.log(u);
 
 // extend in interface 
-interface A {a: string}
-interface B {b: string}
+interface A { a: string }
+interface B { b: string }
 
-interface C extends A, B {}
+interface C extends A, B { }
 
 const obj: C = {
     a: "interface A",
