@@ -45,8 +45,6 @@ afterDelay(2000, () => {
 
 /**
  * Promises
- * async - await
- * setTimeout and setInterval
  */
 
 const promise = new Promise((resolve, reject) => {
