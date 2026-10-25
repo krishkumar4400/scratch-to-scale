@@ -1,0 +1,22 @@
+{
+  "name": "16-redis-rate-limiting-jest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^18.0.9",
+    "express": "^5.3.0",
+    "express-rate-limit": "^8.7.1",
+    "ioredis": "^6.0.0",
+    "mongoose": "^9.11.4",
+    "morgan": "^1.12.1"
+  }
+}
