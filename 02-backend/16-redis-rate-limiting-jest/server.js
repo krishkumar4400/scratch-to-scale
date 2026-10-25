@@ -122,17 +122,17 @@ app.post("/api/users/", async (req, res) => {
   }
 });
 
-app.get("/", (req,res) => {
-    let sum = 0;
-    for(let i = 0; i < 100; i++) {
-        sum += i;
-    }
-    console.log(sum);
+app.get("/", (req, res) => {
+  let sum = 0;
+  for (let i = 0; i < 100; i++) {
+    sum += i;
+  }
+  console.log(sum);
 
-    return res.status(200).json({
-        message: "Calculator",
-        data: sum
-    });
+  return res.status(200).json({
+    message: "Calculator",
+    data: sum,
+  });
 });
 
 app.listen(process.env.PORT, () => {

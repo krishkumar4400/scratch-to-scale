@@ -18,5 +18,8 @@
     "ioredis": "^6.0.0",
     "mongoose": "^9.11.4",
     "morgan": "^1.12.1"
+  },
+  "devDependencies": {
+    "jest": "^30.5.2"
   }
 }
