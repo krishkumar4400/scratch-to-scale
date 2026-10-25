@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Welcome to My EJS App</h1>
+
+    <section>
+      <div>
+        <img
+          src=<%= imageUrl %>
+          alt=""
+        />
+      </div>
+      <div>
+        <h2><%= username %></h2>
+      </div>
+      <div><p><%= bio %></p></div>
+    </section>
+
+    <!-- loops in EJS -->
+    <div>
+        <ol>
+            <% for(let i = 1; i <= 10; i++){ %>
+                <li>Item = <%= i%></li>
+            <% } %>
+        </ol>
+    </div>
+
+    <!-- conditional rendering -->
+    <div>
+        <% const age = 18 %>
+        <h1>
+            <%= age > 18 ? "Adult" : "Not Adult"  %>
+        </h1>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
