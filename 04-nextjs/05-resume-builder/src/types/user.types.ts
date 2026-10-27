@@ -15,6 +15,7 @@ export interface IUser {
   role: userRoles;
   createdAt?: Date;
   updatedAt?: Date;
+  __v?: number
 }
 
 export interface RegisterBody {
@@ -46,7 +47,6 @@ export interface User {
   _id: Types.ObjectId;
   name: string;
   email: string;
-  password: string;
   role: "user" | "admin";
   createdAt: Date;
   updatedAt: Date;

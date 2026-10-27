@@ -2,7 +2,7 @@ import { comparePassword } from "@/lib/bcrypt";
 import dbConnect from "@/lib/database";
 import { generateJWTToken } from "@/lib/jwt";
 import userModel from "@/models/User.model";
-import { LoginBody, User } from "@/types/user.types.ts";
+import { IUser, LoginBody, User } from "@/types/user.types.ts";
 import ApiError from "@/utils/api-error";
 import ApiResponse from "@/utils/api-response";
 import { loginSchema } from "@/validators/auth.validator";
@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
     const { email, password }: LoginBody = result.data;
     console.log({ email, password });
 
-    const user: User | null = await userModel
+    const user: IUser | null = await userModel
       .findOne({ email })
       .select("+password");
 

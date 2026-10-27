@@ -1,11 +1,12 @@
 import { generateHash } from "@/lib/bcrypt";
-import dbConnect from "@/lib/database";
-import { generateJWTToken } from "@/lib/jwt";
-import userModel from "@/models/User.model";
-import { RegisterBody, userRoles } from "@/types/user.types.ts";
+import dbConnect from "@/lib/database.ts";
+import { generateJWTToken } from "@/lib/jwt.ts";
+import userModel from "@/models/User.model.ts";
+import { ApiResponses } from "@/types/api.types.ts";
+import { IUser, RegisterBody, userRoles } from "@/types/user.types.ts";
 import ApiError from "@/utils/api-error.ts";
-import ApiResponse from "@/utils/api-response";
-import { registerSchema } from "@/validators/auth.validator";
+// import ApiResponse from "@/utils/api-response.ts";
+import { registerSchema } from "@/validators/auth.validator.ts";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -34,7 +35,7 @@ export async function POST(req: NextRequest) {
 
     const { name, email, password }: RegisterBody = result.data;
     console.log({ name, email, password });
-    const existingUser = await userModel.findOne({ email });
+    const existingUser: IUser | null = await userModel.findOne({ email });
 
     if (existingUser) {
       throw new ApiError(409, "Email already exists");
@@ -42,16 +43,17 @@ export async function POST(req: NextRequest) {
 
     const hash: string = await generateHash(password);
 
-    const user = await userModel.create({
+    const user: IUser = await userModel.create({
       name,
       email,
       password: hash,
       role: userRoles.USER,
     });
 
-    const token = await generateJWTToken({ userId: user._id });
+    const token: string = generateJWTToken({ userId: user._id });
 
     const cookieStore = await cookies();
+
     cookieStore.set("token", token, {
       httpOnly: true,
       secure: false,
@@ -60,29 +62,43 @@ export async function POST(req: NextRequest) {
       maxAge: 60 * 60 * 24,
     });
 
-    return NextResponse.json(
-      new ApiResponse(201, user, "User has been registered successfully"),
-      {
-        status: 201,
-      },
-    );
+    return NextResponse.json<ApiResponses<IUser>>({
+      message: "",
+      success: false,
+      data: user,
+      errors: null,
+    });
+
+    // return NextResponse.json(
+    //   new ApiResponse(201, user, "User has been registered successfully"),
+    //   {
+    //     status: 201,
+    //   },
+    // );
   } catch (error) {
     console.log(error);
-    if (error instanceof Error) {
+    if (error instanceof ApiError) {
       return NextResponse.json(
         {
+          success: error.success,
+          statusCode: error.statusCode,
           message: error.message,
-          success: false,
+          data: error.data,
+          errors: error.errors,
         },
-        {
-          status: 500,
-        },
+        { status: error.statusCode },
       );
     }
 
-    return NextResponse.json({
-      message: "Internal server error",
-      success: false,
-    });
+    return NextResponse.json(
+      {
+        success: false,
+        statusCode: 500,
+        message: "Internal server error",
+        data: null,
+        errors: [],
+      },
+      { status: 500 },
+    );
   }
 }
