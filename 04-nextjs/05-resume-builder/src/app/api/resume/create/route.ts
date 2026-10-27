@@ -1,6 +1,6 @@
 import { getCurrentUser } from "@/lib/auth";
 import dbConnect from "@/lib/database";
-import { IResume } from "@/types/resume.types";
+import resumeModel from "@/models/Resume.model";
 import { IUser } from "@/types/user.types";
 import ApiError from "@/utils/api-error";
 import { NextRequest, NextResponse } from "next/server";
@@ -23,16 +23,25 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const {title, summary, }: IResume = await req.json();
+    const resume = await resumeModel.create({
+      user: user._id,
+      title: "",
+      summary: "",
+      personalInfo: {},
+      workExperience: [],
+      projects: [],
+      achievements: [],
+      certifications: [],
+      education: [],
+      skills: [],
+    });
+
+    console.log(resume);
 
     return NextResponse.json({
       success: true,
       message: "Profile fetched successfully",
-      data: {
-        id: user._id.toString(),
-        name: user.name,
-        email: user.email,
-      },
+      data: { resume },
       errors: [],
     });
   } catch (error) {
