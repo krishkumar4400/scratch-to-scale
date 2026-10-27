@@ -31,7 +31,7 @@ export interface LoginBody {
 }
 
 export interface JWTPayload extends JwtPayload {
-  userId: Types.ObjectId;
+  userId: string;
 }
 
 export interface JWTExpiry {

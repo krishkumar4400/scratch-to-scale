@@ -2,7 +2,7 @@ import { comparePassword } from "@/lib/bcrypt";
 import dbConnect from "@/lib/database";
 import { generateJWTToken } from "@/lib/jwt";
 import userModel from "@/models/User.model";
-import { IUser, LoginBody, User } from "@/types/user.types.ts";
+import { IUser, LoginBody } from "@/types/user.types.ts";
 import ApiError from "@/utils/api-error";
 import ApiResponse from "@/utils/api-response";
 import { loginSchema } from "@/validators/auth.validator";
@@ -52,7 +52,7 @@ export async function POST(req: NextRequest) {
       throw new ApiError(401, "incorrect email or password");
     }
 
-    const token: string = generateJWTToken({ userId: user._id });
+    const token: string = generateJWTToken({ userId: user._id.toString() });
     const cookieStore = await cookies();
     cookieStore.set("token", token);
 

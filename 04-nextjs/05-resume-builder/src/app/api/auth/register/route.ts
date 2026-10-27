@@ -50,7 +50,7 @@ export async function POST(req: NextRequest) {
       role: userRoles.USER,
     });
 
-    const token: string = generateJWTToken({ userId: user._id });
+    const token: string = generateJWTToken({ userId: user._id.toString() });
 
     const cookieStore = await cookies();
 
