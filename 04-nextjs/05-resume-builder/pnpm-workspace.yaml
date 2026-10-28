@@ -1,4 +1,6 @@
 allowBuilds:
+  '@google/genai': set this to true or false
   bcrypt: false
+  protobufjs: set this to true or false
   sharp: false
   unrs-resolver: false

@@ -9,6 +9,9 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@google/genai": "^2.31.0",
+    "@next/env": "^16.4.3",
+    "@types/dotenv": "^8.2.3",
     "bcrypt": "^6.0.0",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.11.4",

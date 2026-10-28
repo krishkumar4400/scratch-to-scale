@@ -40,7 +40,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      message: "Profile fetched successfully",
+      message: "Resume created successfully",
       data: { resume },
       errors: [],
     });
