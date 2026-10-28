@@ -21,3 +21,13 @@ export interface ExperienceDescription {
   employmentType: string;
   experienceDetails: string;
 }
+
+export interface ImproveContent {
+  content: string;
+  jobTitle: string;
+  targetJobDescription: string;
+}
+
+export interface ATSScore {
+  resumeText: string;
+}
