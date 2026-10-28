@@ -1,6 +1,7 @@
 import Link from "next/link";
 import ProductCard from "@/components/ProductCard";
 import { products } from "@/data/products";
+import Navbar from "@/components/Navbar";
 
 const categories = [
   {
@@ -34,6 +35,7 @@ export default function page() {
 
   return (
     <main className="min-h-screen bg-white">
+      <Navbar/>
       {/* Hero Section */}
       <section className="bg-gray-50">
         <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-16 sm:px-6 md:grid-cols-2 md:py-24 lg:px-8">
@@ -263,7 +265,7 @@ export default function page() {
           </Link>
 
           <p>
-            © {new Date().getFullYear()} ShopEase. Built for everyday shopping.
+            © ShopEase. Built for everyday shopping.
           </p>
 
           <Link href="/products" className="transition hover:text-indigo-600">
