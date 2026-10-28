@@ -1,28 +1,40 @@
 "use client";
 
+import { AuthContext } from "@/context/AuthContext";
+import axios from "axios";
 import Link from "next/link";
-import { useState, type SubmitEvent } from "react";
+import { useRouter } from "next/navigation";
+import { useContext, useState, type SubmitEvent } from "react";
 
 export default function RegisterPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("user");
 
-  const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
+  const router = useRouter();
+
+  // const { user, setUser, loading, setLoading } = useContext(AuthContext);
+
+  const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const formData = {
       name,
       email,
-      phone,
       password,
-      role,
     };
 
-    console.log(formData);
+    // console.log(formData);
     // Connect your registration API here.
+
+    try {
+      const { data } = await axios.post("/api/auth/register", formData);
+      console.log(data);
+      setUser(data.data);
+      router.push("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -77,24 +89,6 @@ export default function RegisterPage() {
 
           <div>
             <label
-              htmlFor="phone"
-              className="mb-1.5 block text-sm font-medium text-gray-300"
-            >
-              Phone number
-            </label>
-            <input
-              id="phone"
-              type="tel"
-              autoComplete="tel"
-              placeholder="Your phone number"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              className="w-full rounded-lg border border-gray-300 px-3 py-2.5 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
-            />
-          </div>
-
-          <div>
-            <label
               htmlFor="password"
               className="mb-1.5 block text-sm font-medium text-gray-300"
             >
@@ -111,24 +105,6 @@ export default function RegisterPage() {
               minLength={8}
               className="w-full rounded-lg border border-gray-300 px-3 py-2.5 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
             />
-          </div>
-
-          <div>
-            <label
-              htmlFor="role"
-              className="mb-1.5 block text-sm font-medium text-gray-300"
-            >
-              Role (optional)
-            </label>
-            <select
-              id="role"
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-              className="w-full rounded-lg border border-gray-300 bg-black px-3 py-2.5 outline-none focus:border-gray-500 focus:ring-2 focus:ring-gray-100"
-            >
-              <option value="user">User</option>
-              <option value="admin">Admin</option>
-            </select>
           </div>
 
           <button

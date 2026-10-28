@@ -67,6 +67,8 @@ export async function POST(req: NextRequest) {
       success: false,
       data: user,
       errors: null,
+    }, {
+      status: 201
     });
 
     // return NextResponse.json(
