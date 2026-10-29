@@ -108,7 +108,7 @@ const getAllCatsController = async (req: Request, res: Response) => {
 
 const getCatByIdController = async (req: Request, res: Response) => {
   try {
-    const catId: string = req.body.catId;
+    const catId = req.params.id as string;
     const response = await getCatById(catId);
 
     if (!response) {

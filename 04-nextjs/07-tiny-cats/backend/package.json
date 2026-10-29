@@ -19,6 +19,7 @@
     "typescript": "^7.0.2"
   },
   "dependencies": {
+    "@google/genai": "^2.32.0",
     "@types/dotenv": "^6.1.1",
     "@types/mongoose": "^5.11.96",
     "dotenv": "^18.0.9",
