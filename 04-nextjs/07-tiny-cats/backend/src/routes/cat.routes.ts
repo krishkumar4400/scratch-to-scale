@@ -3,6 +3,7 @@ import {
   createCatController,
   getAllCatsController,
   getCatByIdController,
+  recommendCatsController,
   searchCatsController,
 } from "../controllers/cats.controller.js";
 
@@ -12,6 +13,6 @@ catRouter.post("/create", createCatController);
 catRouter.get("/search/all", searchCatsController);
 catRouter.get("/", getAllCatsController);
 catRouter.get("/:id", getCatByIdController);
-catRouter.post("/recommend");
+catRouter.post("/recommend", recommendCatsController);
 
 export default catRouter;
