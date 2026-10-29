@@ -9,6 +9,8 @@ const recommendCatsTool = async (
     appartmentFriendly,
   });
 
-  
+  return response.data;
 
 };
+
+export default recommendCatsTool;
