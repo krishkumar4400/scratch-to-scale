@@ -74,26 +74,10 @@ Use the following JSON structure:
       "reasons": [
         "Reason based on the user's preferences",
         "Another reason based on the available data"
-      ],
-      "advantages": [
-        "Main advantage"
-      ],
-      "considerations": [
-        "Potential drawback or care consideration"
       ]
     }
   ],
-  "comparison": [
-    {
-      "catName": "Name of the cat",
-      "breed": "Cat breed",
-      "energyLevel": "Energy level",
-      "lifeSpan": 15,
-      "kidFriendly": true,
-      "apartmentFriendly": true,
-      "preferenceMatch": "Explanation of how well this cat matches the user"
-    }
-  ],
+
   "finalRecommendation": {
     "catName": "Name of the best-matching cat",
     "reason": "Why this cat is the best overall choice",

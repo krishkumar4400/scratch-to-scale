@@ -1,7 +1,13 @@
 import { McpServer } from "@modelcontextprotocol/server";
-import { serveStdio, StdioServerTransport } from "@modelcontextprotocol/server/stdio";
+import {
+  serveStdio,
+  StdioServerTransport,
+} from "@modelcontextprotocol/server/stdio";
 import { z } from "zod";
-import recommendCatsTool from "./tools/recommend-cats.tool.js";
+import {
+  getAllCatsTool,
+  recommendCatsTool,
+} from "./tools/recommend-cats.tool.js";
 
 // Build a server instance and register its tools. serveStdio calls this
 // whenever it needs an instance, so every call must return a fresh one.
@@ -23,6 +29,26 @@ server.registerTool(
   },
   async ({ kidsFriendly, appartmentFriendly }) => {
     const result = await recommendCatsTool(kidsFriendly, appartmentFriendly);
+
+    return {
+      content: [
+        {
+          type: "text",
+          text: JSON.stringify(result),
+        },
+      ],
+    };
+  },
+);
+
+server.registerTool(
+  "get_all_cats",
+  {
+    title: "get_all_cats",
+    description: "Get all the cats from the database",
+  },
+  async () => {
+    const result = await getAllCatsTool();
 
     return {
       content: [
