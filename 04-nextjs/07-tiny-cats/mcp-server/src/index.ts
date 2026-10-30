@@ -65,3 +65,5 @@ const transporter = new StdioServerTransport();
 await server.connect(transporter);
 
 console.error("Tiny cats MCP running");
+
+export default server;
